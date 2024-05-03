@@ -50,11 +50,11 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: #15171c;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #222429;
   border-radius: 50px;
 }
 

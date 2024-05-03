@@ -39,7 +39,7 @@ const Carousel = () => {
               src={item.imgUrl}
               alt="card1"
               fill
-              className="absolute size-full rounded-xl border-none"
+              className="absolute size-full rounded-xl border-none object-contain"
             />
             <div className="glassmorphism-black relative z-10 flex flex-col rounded-b-xl p-4">
               <h2 className="text-14 font-semibold text-white-1">

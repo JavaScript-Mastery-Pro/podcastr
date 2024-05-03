@@ -7,7 +7,7 @@ export const getUser = query({
   handler: async (ctx, args) => {
     const user = await ctx.db.query("users").collect();
 
-    return Promise.all(
+    const userData = Promise.all(
       user.map(async (u) => {
         const podcasts = await ctx.db
           .query("podcasts")
@@ -19,6 +19,8 @@ export const getUser = query({
         };
       })
     );
+
+    return (await userData).sort((a, b) => b.totalPodcasts - a.totalPodcasts);
   },
 });
 

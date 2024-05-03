@@ -13,7 +13,7 @@ const RightSidebar = async () => {
   const user = await currentUser();
   const topPodcasters = await fetchQuery(api.users.getUser);
   return (
-    <section className="custom-scrollbar sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-none bg-black-1 px-[30px] pt-8 dark:shadow-none max-xl:hidden">
+    <section className="custom-scrollbar sticky right-0 top-0 flex max-h-dvh w-[310px] flex-col overflow-y-auto border-none bg-black-1 px-[30px] pt-8 dark:shadow-none max-xl:hidden">
       <SignedIn>
         <Link href="/profile" className="flex items-center gap-4 pb-12">
           <Image
@@ -35,15 +35,18 @@ const RightSidebar = async () => {
       <section className="flex flex-col gap-6 pt-12">
         <Header headerTitle="Top Podcasters" />
         <div className="flex flex-col gap-6">
-          {topPodcasters.map((podcaster) => (
+          {topPodcasters.slice(0, 10).map((podcaster) => (
             <div key={podcaster._id} className="flex justify-between">
               <figure className="flex items-center gap-2">
-                <Image
-                  src={podcaster.imageUrl}
-                  alt="casters"
-                  width={44}
-                  height={44}
-                />
+                <Link href={`/podcaster/${podcaster._id}`}>
+                  <Image
+                    src={podcaster.imageUrl}
+                    alt="casters"
+                    width={44}
+                    height={44}
+                    className="rounded-lg"
+                  />
+                </Link>
                 <h2 className="text-14 font-semibold text-white-1">
                   {podcaster.name}
                 </h2>

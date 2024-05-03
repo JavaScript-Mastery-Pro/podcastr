@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
@@ -15,10 +17,11 @@ const Header = ({
         {headerTitle}
       </h1>
       <Button
+        asChild
         variant="ghost"
         className="text-16 font-semibold text-orange-1 hover:bg-transparent hover:text-orange-1"
       >
-        See all
+        <Link href="/discover">See all</Link>
       </Button>
     </header>
   );
