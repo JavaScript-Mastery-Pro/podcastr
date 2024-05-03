@@ -1,6 +1,6 @@
 import { fetchQuery } from "convex/nextjs";
-import Link from "next/link";
 
+import EmptyState from "@/components/EmptyState";
 import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
@@ -42,15 +42,7 @@ const DiscoverPage = async ({
             ))}
           </div>
         ) : (
-          <div className="flex h-12 w-full items-center gap-2 rounded-lg bg-black-1 px-4">
-            <h1 className="text-16 font-semibold text-white-1">
-              No search matches for{" "}
-              <span className="text-white-2">{search}</span>
-            </h1>
-            <Link href="/" className="text-blue-500 underline">
-              Go to Home
-            </Link>
-          </div>
+          <EmptyState title="No results found" />
         )}
       </div>
     </section>
