@@ -21,6 +21,9 @@ interface GeneratePodcastProps {
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;
   setAudioStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
+  voicePrompt: string;
+  setVoicePrompt: Dispatch<SetStateAction<string>>;
+  setAudioDuration: Dispatch<SetStateAction<number>>;
 }
 
 const GeneratePodcast = ({
@@ -28,9 +31,11 @@ const GeneratePodcast = ({
   setAudio,
   setAudioStorageId,
   audio,
+  voicePrompt,
+  setVoicePrompt,
+  setAudioDuration,
 }: GeneratePodcastProps) => {
   const { toast } = useToast();
-  const [aiPrompt, setAiPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
@@ -42,7 +47,7 @@ const GeneratePodcast = ({
     try {
       const response = await getPodcastAudio({
         voice: voiceType,
-        input: aiPrompt,
+        input: voicePrompt,
       });
 
       const blob = new Blob([response], { type: "audio/mpeg" });
@@ -75,8 +80,8 @@ const GeneratePodcast = ({
           className="input-class font-light focus-visible:ring-orange-1"
           placeholder="Provide text to AI to generate audio"
           rows={5}
-          value={aiPrompt}
-          onChange={(e) => setAiPrompt(e.target.value)}
+          value={voicePrompt}
+          onChange={(e) => setVoicePrompt(e.target.value)}
         />
       </div>
       <div className="mt-5 w-full max-w-[200px]">
@@ -94,7 +99,15 @@ const GeneratePodcast = ({
           )}
         </Button>
       </div>
-      {audio && <audio controls src={audio} autoPlay className="mt-5" />}
+      {audio && (
+        <audio
+          controls
+          src={audio}
+          autoPlay
+          className="mt-5"
+          onLoadedMetadata={(e) => setAudioDuration(e.currentTarget.duration)}
+        />
+      )}
     </div>
   );
 };

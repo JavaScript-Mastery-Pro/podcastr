@@ -12,6 +12,9 @@
   .input-class {
     @apply text-16 placeholder:text-16 bg-black-1 rounded-[6px] placeholder:text-gray-1 text-white-1 border-none;
   }
+  .podcast_grid {
+    @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4;
+  }
   .button_bold-16 {
     @apply text-[16px] font-bold text-white-1 transition-all duration-500;
   }

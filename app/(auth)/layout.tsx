@@ -6,7 +6,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
     <main className="relative h-screen w-full">
       <div className=" absolute size-full">
         <Image
-          src="/icons/bg-img.png"
+          src="/images/bg-img.png"
           alt="auth bg"
           fill
           className="size-full"

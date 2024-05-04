@@ -3,12 +3,19 @@ import { EmblaCarouselType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-import { fansLikeDetail } from "@/constants";
+import { TopPodcastersProps } from "@/types";
 
 import { DotButton, useDotButton } from "./DotButton";
-const Carousel = () => {
+
+interface CarouselProps {
+  fansLikeDetail: TopPodcastersProps[];
+}
+
+const Carousel = ({ fansLikeDetail }: CarouselProps) => {
+  const router = useRouter();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
     const autoplay = emblaApi?.plugins()?.autoplay;
@@ -24,28 +31,36 @@ const Carousel = () => {
     emblaApi,
     onNavButtonClick
   );
+
+  const filteredFansLikeDetail = fansLikeDetail.filter(
+    (item) => item.totalPodcasts > 0
+  );
+
   return (
     <section
       className="flex w-full flex-col gap-4 overflow-hidden"
       ref={emblaRef}
     >
       <div className="flex">
-        {fansLikeDetail.map((item) => (
+        {filteredFansLikeDetail.slice(0, 5).map((item) => (
           <figure
-            key={item.id}
-            className="relative flex h-[250px] w-full flex-none flex-col justify-end rounded-xl border-none"
+            key={item._id}
+            className="relative flex h-[250px] w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none"
+            onClick={() =>
+              router.push(`/podcaster/${item.podcast[0]?.pocastId}`)
+            }
           >
             <Image
-              src={item.imgUrl}
+              src={item.imageUrl}
               alt="card1"
               fill
               className="absolute size-full rounded-xl border-none object-contain"
             />
             <div className="glassmorphism-black relative z-10 flex flex-col rounded-b-xl p-4">
               <h2 className="text-14 font-semibold text-white-1">
-                {item.title}
+                {item.podcast[0]?.podcastTitle}
               </h2>
-              <p className="text-12 font-normal text-white-2">{item.author}</p>
+              <p className="text-12 font-normal text-white-2">{item.name}</p>
             </div>
           </figure>
         ))}

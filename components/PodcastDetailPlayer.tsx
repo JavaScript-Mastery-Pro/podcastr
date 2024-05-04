@@ -101,9 +101,9 @@ const PodcastDetailPlayer = ({
           width={250}
           height={250}
           alt="Podcast image"
-          className="h-[250px] w-full max-w-[250px] rounded-lg object-cover"
+          className="h-full max-h-[250px] w-[250px]  flex-none rounded-lg object-cover"
         />
-        <div className="flex w-full flex-col gap-9 max-md:items-center">
+        <div className="flex w-full flex-col gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">
             <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1">
               {podcastTitle}

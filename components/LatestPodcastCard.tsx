@@ -1,17 +1,21 @@
 "use client";
+import { useMutation } from "convex/react";
 import Image from "next/image";
 import { useState } from "react";
 
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import { useAudio } from "@/providers/AudioProvider";
 
 interface LatestPodcastCardProps {
   imgUrl: string;
   title: string;
-  listeners: string;
   duration: string;
   index: number;
   audioUrl: string;
   author: string;
+  views: number;
+  podcastId: Id<"podcasts">;
 }
 
 const IconWithDescription = ({
@@ -19,7 +23,7 @@ const IconWithDescription = ({
   detail,
 }: {
   img: string;
-  detail: string;
+  detail: number | string;
 }) => {
   return (
     <div className="flex gap-3">
@@ -38,20 +42,28 @@ const IconWithDescription = ({
 const LatestPodcastCard = ({
   index,
   imgUrl,
-  listeners,
   title,
   duration,
   audioUrl,
   author,
+  views,
+  podcastId,
 }: LatestPodcastCardProps) => {
   const { setAudio } = useAudio();
   const [isFocused, setIsFocused] = useState(false);
+  const updateViews = useMutation(api.podcasts.updatePodcastViews);
+
+  const handleClick = async () => {
+    setAudio({ title, author, imageUrl: imgUrl, audioUrl });
+    await updateViews({ podcastId });
+  };
+
   return (
     <section
       className="flex w-full cursor-pointer justify-between"
       onMouseEnter={() => setIsFocused(true)}
       onMouseLeave={() => setIsFocused(false)}
-      onClick={() => setAudio({ title, author, imageUrl: imgUrl, audioUrl })}
+      onClick={handleClick}
     >
       <div className="flex items-center gap-3 md:gap-8">
         <div className="w-4 md:w-6">
@@ -63,7 +75,7 @@ const LatestPodcastCard = ({
               src="/icons/play-gray.svg"
               width={22}
               height={24}
-              alt="newpod"
+              alt="play"
             />
           )}
         </div>
@@ -79,7 +91,7 @@ const LatestPodcastCard = ({
         </figure>
       </div>
       <div className="flex items-center gap-14 max-md:hidden">
-        <IconWithDescription img="/icons/headphone.svg" detail={listeners} />
+        <IconWithDescription img="/icons/headphone.svg" detail={views} />
         <IconWithDescription img="/icons/watch.svg" detail={duration} />
       </div>
     </section>

@@ -1,9 +1,9 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,15 +41,18 @@ const formSchema = z.object({
 type VoiceType = "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer";
 
 const CreatePodcast = () => {
-  const { user } = useUser();
+  const router = useRouter();
   const { toast } = useToast();
   const [audioUrl, setAudioUrl] = useState("");
+  const [audioDuration, setAudioDuration] = useState(0);
   const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(
     null
   );
+  const [imagePrompt, setImagePrompt] = useState("");
   const [audioStorageId, setAudioStorageId] = useState<Id<"_storage"> | null>(
     null
   );
+  const [voicePrompt, setVoicePrompt] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const createPodcast = useMutation(api.podcasts.createPodcast);
@@ -64,20 +67,24 @@ const CreatePodcast = () => {
   const handleCreatePodcast = async (data: z.infer<typeof formSchema>) => {
     try {
       setIsSubmitting(true);
-      await createPodcast({
+      const podcast = await createPodcast({
         audioStorageId: audioStorageId as Id<"_storage">,
         podcastTitle: data.podcastTitle,
         podcastDescription: data.podcastDescription,
         audioUrl,
         imageUrl,
         imageStorageId: imageStorageId as Id<"_storage">,
-        author: user?.firstName || "",
-        authorId: user?.id || "",
+        voiceType,
+        voicePrompt,
+        imagePrompt,
+        views: 0,
+        audioDuration,
       });
       toast({
         title: "Podcast created successfully",
       });
       setIsSubmitting(false);
+      router.push(`/podcast/${podcast}`);
     } catch (error) {
       console.error("Error creating podcast", error);
       toast({
@@ -166,12 +173,17 @@ const CreatePodcast = () => {
               setAudio={setAudioUrl}
               voiceType={voiceType}
               audio={audioUrl}
+              voicePrompt={voicePrompt}
+              setVoicePrompt={setVoicePrompt}
+              setAudioDuration={setAudioDuration}
             />
 
             <GenerateThumbnail
               setImage={setImageUrl}
               setImageStorageId={setImageStorageId}
               image={imageUrl}
+              imagePrompt={imagePrompt}
+              setImagePrompt={setImagePrompt}
             />
             <div className="mt-10 w-full">
               <Button

@@ -21,16 +21,19 @@ interface GenerateThumbnailProps {
   setImage: Dispatch<SetStateAction<string>>;
   setImageStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
   image: string;
+  imagePrompt: string;
+  setImagePrompt: Dispatch<SetStateAction<string>>;
 }
 
 const GenerateThumbnail = ({
   setImage,
   setImageStorageId,
   image,
+  imagePrompt,
+  setImagePrompt,
 }: GenerateThumbnailProps) => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [isAiThumbnail, setIsAiThumbnail] = useState(false);
-  const [aiPrompt, setAiPrompt] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
   const handleGenerateThumbnail = useAction(api.openai.generateThumbnailAction);
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
@@ -42,7 +45,7 @@ const GenerateThumbnail = ({
     setIsImageLoading(true);
     setImage("");
     try {
-      const response = await handleGenerateThumbnail({ prompt: aiPrompt });
+      const response = await handleGenerateThumbnail({ prompt: imagePrompt });
       const blob = new Blob([response], { type: "image/png" });
       const file = new File([blob], `thumbnail-${uuidv4()}`, {
         type: "image/png",
@@ -124,8 +127,8 @@ const GenerateThumbnail = ({
             <Textarea
               className="input-class font-light focus-visible:ring-orange-1"
               placeholder="Write a prompt to generate custom thumbnail"
-              value={aiPrompt}
-              onChange={(e) => setAiPrompt(e.target.value)}
+              value={imagePrompt}
+              onChange={(e) => setImagePrompt(e.target.value)}
             />
           </div>
           <div className="w-full max-w-[200px]">

@@ -13,11 +13,9 @@ const DiscoverPage = async ({
   };
 }) => {
   const search = searchParams.search || "";
-  console.log(search);
   const podcastsData = await fetchQuery(api.podcasts.getPodcastBySearch, {
     search,
   });
-  console.log(podcastsData);
   return (
     <section className="mt-9">
       <div className="flex flex-col gap-9">
@@ -26,11 +24,12 @@ const DiscoverPage = async ({
             "text-white-2": search,
           })}
         >
-          {!search ? "Discover Community Podcasts" : `Search results of `}{" "}
+          {!search ? "Discover Community Podcasts" : `Search results for : `}
+          &nbsp;
           {search && <span className="text-white-1">{search}</span>}
         </h1>
         {podcastsData.length > 0 ? (
-          <div className="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4">
+          <div className="podcast_grid">
             {podcastsData?.map((podcast) => (
               <PodcastCard
                 key={podcast._id}

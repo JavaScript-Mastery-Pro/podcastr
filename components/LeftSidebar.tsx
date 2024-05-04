@@ -1,12 +1,13 @@
 "use client";
 
-import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth, useClerk } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
+import { useAudio } from "@/providers/AudioProvider";
 
 import { Button } from "./ui/button";
 
@@ -14,9 +15,18 @@ const LeftSidebar = () => {
   const pathname = usePathname();
   const { signOut } = useClerk();
   const router = useRouter();
+  const { userId } = useAuth();
+  const { audio } = useAudio();
 
   return (
-    <section className="sticky left-0 top-0 flex h-dvh w-fit flex-col  justify-between  border-none  bg-black-1 pt-8 text-white-1 max-md:hidden lg:w-[270px] lg:pl-8">
+    <section
+      className={cn(
+        "sticky left-0 top-0 flex h-[calc(100vh-5px)] w-fit flex-col  justify-between  border-none  bg-black-1 pt-8 text-white-1 max-md:hidden lg:w-[270px] lg:pl-8",
+        {
+          "h-[calc(100vh-116px)]": audio?.audioUrl,
+        }
+      )}
+    >
       <nav className="flex flex-col gap-6">
         <Link
           href="/"
@@ -62,6 +72,36 @@ const LeftSidebar = () => {
             </Link>
           );
         })}
+        <SignedIn>
+          <Link
+            href={userId ? `/profile/${userId}` : "/"}
+            className={cn(
+              "flex gap-3 items-center py-4 max-lg:px-4 justify-center lg:justify-start ",
+              {
+                "bg-nav-focus border-r-4 border-orange-1":
+                  pathname === "/profile" || pathname.startsWith("/profile"),
+              }
+            )}
+          >
+            <Image
+              src="/icons/profile.svg"
+              alt="profile"
+              width={24}
+              height={24}
+            />
+            <p
+              className={cn(
+                "text-16 font-semibold text-white-2 max-lg:hidden",
+                {
+                  "text-white-1":
+                    pathname === "/profile" || pathname.startsWith("/profile"),
+                }
+              )}
+            >
+              My Profile
+            </p>
+          </Link>
+        </SignedIn>
       </nav>
       <SignedOut>
         <div className="flex-center w-full pb-14 max-lg:px-4 lg:pr-8">

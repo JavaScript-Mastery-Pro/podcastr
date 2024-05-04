@@ -18,6 +18,12 @@ export default defineSchema({
     imageStorageId: v.union(v.id("_storage"), v.null()),
     author: v.string(),
     authorId: v.string(),
+    authorImageUrl: v.string(),
+    voicePrompt: v.string(),
+    imagePrompt: v.union(v.string(), v.null()),
+    voiceType: v.string(),
+    audioDuration: v.number(),
+    views: v.number(),
   })
     .searchIndex("search_author", {
       searchField: "author",

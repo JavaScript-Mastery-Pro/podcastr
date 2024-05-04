@@ -21,10 +21,12 @@ export const generateThumbnailAction = action({
       quality: "standard",
       n: 1,
     });
+
     const url = response.data[0].url;
     if (!url) {
       throw new Error("Failed to generate image from prompt");
     }
+
     const imageResponse = await fetch(url);
     const buffer = await imageResponse.arrayBuffer();
     return buffer;
@@ -49,6 +51,7 @@ export const generateAudioAction = action({
       voice: args.voice,
       input: args.input,
     });
+
     const buffer = await response.arrayBuffer();
 
     return buffer;

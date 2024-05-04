@@ -11,11 +11,14 @@ import Header from "./shared/Header";
 
 const RightSidebar = async () => {
   const user = await currentUser();
-  const topPodcasters = await fetchQuery(api.users.getUser);
+  const topPodcasters = await fetchQuery(api.users.getTopUserByPodcastCount);
   return (
     <section className="custom-scrollbar sticky right-0 top-0 flex max-h-dvh w-[310px] flex-col overflow-y-auto border-none bg-black-1 px-[30px] pt-8 dark:shadow-none max-xl:hidden">
       <SignedIn>
-        <Link href="/profile" className="flex items-center gap-4 pb-12">
+        <Link
+          href={`/profile/${user?.id}`}
+          className="flex items-center gap-4 pb-12"
+        >
           <Image
             src={user?.imageUrl || "/icons/avatar.svg"}
             alt="user image"
@@ -30,15 +33,15 @@ const RightSidebar = async () => {
       </SignedIn>
       <section className="flex flex-col gap-4">
         <Header headerTitle="Fans Like You" />
-        <Carousel />
+        <Carousel fansLikeDetail={topPodcasters} />
       </section>
-      <section className="flex flex-col gap-6 pt-12">
+      <section className="flex flex-col gap-8 pt-12">
         <Header headerTitle="Top Podcasters" />
         <div className="flex flex-col gap-6">
           {topPodcasters.slice(0, 10).map((podcaster) => (
             <div key={podcaster._id} className="flex justify-between">
               <figure className="flex items-center gap-2">
-                <Link href={`/podcaster/${podcaster._id}`}>
+                <Link href={`/podcaster/${podcaster.clerkId}`}>
                   <Image
                     src={podcaster.imageUrl}
                     alt="casters"

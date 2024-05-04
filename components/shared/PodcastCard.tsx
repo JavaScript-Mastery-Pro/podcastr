@@ -1,11 +1,16 @@
+"use client";
+import { useMutation } from "convex/react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface PodcastCardProps {
   imgUrl: string;
   title: string;
   author: string;
-  podcastId: string;
+  podcastId: Id<"podcasts">;
 }
 
 const PodcastCard = ({
@@ -14,15 +19,22 @@ const PodcastCard = ({
   author,
   podcastId,
 }: PodcastCardProps) => {
+  const router = useRouter();
+  const updateViews = useMutation(api.podcasts.updatePodcastViews);
+
+  const handleViews = async () => {
+    await updateViews({ podcastId });
+    router.push(`/podcast/${podcastId}`);
+  };
   return (
-    <Link href={`/podcast/${podcastId}`}>
+    <div onClick={handleViews} className="cursor-pointer">
       <figure className="flex flex-col gap-2">
         <Image
           src={imgUrl}
-          width={200}
-          height={150}
+          width={174}
+          height={174}
           alt="pod"
-          className="size-full h-[174px] max-w-[250px] rounded-xl object-cover"
+          className="h-[220px] w-full rounded-xl 2xl:size-[200px]"
         />
         <div className="flex flex-col">
           <h1 className="text-16 truncate font-bold text-white-1">{title}</h1>
@@ -31,7 +43,7 @@ const PodcastCard = ({
           </h2>
         </div>
       </figure>
-    </Link>
+    </div>
   );
 };
 
