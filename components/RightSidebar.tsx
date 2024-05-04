@@ -1,5 +1,7 @@
-import { SignedIn, currentUser } from "@clerk/nextjs";
-import { fetchQuery } from "convex/nextjs";
+"use client";
+
+import { SignedIn, useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -9,9 +11,9 @@ import { api } from "@/convex/_generated/api";
 import Carousel from "./Carousel";
 import Header from "./shared/Header";
 
-const RightSidebar = async () => {
-  const user = await currentUser();
-  const topPodcasters = await fetchQuery(api.users.getTopUserByPodcastCount);
+const RightSidebar = () => {
+  const { user } = useUser();
+  const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   return (
     <section className="custom-scrollbar right_sidebar">
       <SignedIn>
@@ -33,12 +35,12 @@ const RightSidebar = async () => {
       </SignedIn>
       <section className="flex flex-col gap-4">
         <Header headerTitle="Fans Like You" />
-        <Carousel fansLikeDetail={topPodcasters} />
+        <Carousel fansLikeDetail={topPodcasters!} />
       </section>
       <section className="flex flex-col gap-8 pt-12">
         <Header headerTitle="Top Podcasters" />
         <div className="flex flex-col gap-6">
-          {topPodcasters.slice(0, 10).map((podcaster) => (
+          {topPodcasters?.slice(0, 10).map((podcaster) => (
             <div key={podcaster._id} className="flex justify-between">
               <figure className="flex items-center gap-2">
                 <Link href={`/podcaster/${podcaster.clerkId}`}>

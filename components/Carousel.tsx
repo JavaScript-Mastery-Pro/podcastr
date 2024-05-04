@@ -16,7 +16,9 @@ interface CarouselProps {
 
 const Carousel = ({ fansLikeDetail }: CarouselProps) => {
   const router = useRouter();
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
     const autoplay = emblaApi?.plugins()?.autoplay;
     if (!autoplay || !("stopOnInteraction" in autoplay.options)) return;
@@ -27,14 +29,14 @@ const Carousel = ({ fansLikeDetail }: CarouselProps) => {
 
     resetOrStop();
   }, []);
+
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
     emblaApi,
     onNavButtonClick
   );
 
-  const filteredFansLikeDetail = fansLikeDetail.filter(
-    (item) => item.totalPodcasts > 0
-  );
+  const filteredFansLikeDetail =
+    fansLikeDetail && fansLikeDetail?.filter((item) => item.totalPodcasts > 0);
 
   return (
     <section
@@ -42,7 +44,7 @@ const Carousel = ({ fansLikeDetail }: CarouselProps) => {
       ref={emblaRef}
     >
       <div className="flex">
-        {filteredFansLikeDetail.slice(0, 5).map((item) => (
+        {filteredFansLikeDetail?.slice(0, 5).map((item) => (
           <figure
             key={item._id}
             className=" carousel_box"

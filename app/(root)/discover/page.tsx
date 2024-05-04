@@ -1,11 +1,13 @@
-import { fetchQuery } from "convex/nextjs";
+"use client";
+
+import { useQuery } from "convex/react";
 
 import EmptyState from "@/components/EmptyState";
 import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 
-const DiscoverPage = async ({
+const DiscoverPage = ({
   searchParams,
 }: {
   searchParams: {
@@ -13,7 +15,7 @@ const DiscoverPage = async ({
   };
 }) => {
   const search = searchParams.search || "";
-  const podcastsData = await fetchQuery(api.podcasts.getPodcastBySearch, {
+  const podcastsData = useQuery(api.podcasts.getPodcastBySearch, {
     search,
   });
   return (
@@ -28,7 +30,7 @@ const DiscoverPage = async ({
           &nbsp;
           {search && <span className="text-white-1">{search}</span>}
         </h1>
-        {podcastsData.length > 0 ? (
+        {podcastsData && podcastsData.length > 0 ? (
           <div className="podcast_grid">
             {podcastsData?.map((podcast) => (
               <PodcastCard

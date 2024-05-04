@@ -70,15 +70,18 @@ const PodcastPlayer = () => {
   }, []);
 
   useEffect(() => {
+    const audioElement = audioRef.current;
     if (audio?.audioUrl) {
-      const audioElement = audioRef.current;
       if (audioElement) {
         audioElement.play().then(() => {
           setIsPlaying(true);
         });
       }
+    } else {
+      audioElement?.pause();
+      setIsPlaying(true);
     }
-  }, [audio?.audioUrl]);
+  }, [audio]);
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
@@ -90,18 +93,17 @@ const PodcastPlayer = () => {
   };
 
   return (
-    <div className="sticky bottom-0 left-0 flex size-full flex-col">
+    <div
+      className={cn("sticky bottom-0 left-0 flex size-full flex-col", {
+        hidden: !audio?.audioUrl || audio?.audioUrl === "",
+      })}
+    >
       <Progress
         value={(currentTime / duration) * 100}
         className="w-full"
         max={duration}
       />
-      <section
-        className={cn(
-          "glassmorphism-black h-[112px] flex  w-full items-center justify-between px-4 md:px-12",
-          { hidden: !audio?.audioUrl || audio?.audioUrl === "" }
-        )}
-      >
+      <section className="glassmorphism-black flex h-[112px]  w-full items-center justify-between px-4 md:px-12">
         <audio
           ref={audioRef}
           src={audio?.audioUrl}
