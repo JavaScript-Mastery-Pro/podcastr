@@ -15,6 +15,21 @@
   .podcast_grid {
     @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4;
   }
+  .right_sidebar {
+    @apply sticky right-0 top-0 flex h-[calc(100vh-5px)] w-[310px] flex-col overflow-y-auto border-none bg-black-1 px-[30px] pt-8 max-xl:hidden;
+  }
+  .left_sidebar {
+    @apply sticky left-0 top-0 flex h-[calc(100vh-5px)] w-fit flex-col  justify-between  border-none  bg-black-1 pt-8 text-white-1 max-md:hidden lg:w-[270px] lg:pl-8;
+  }
+  .generate_thumbnail {
+    @apply mt-[30px] flex w-full max-w-[520px] flex-col justify-between gap-2 rounded-lg border border-black-6 bg-black-1 px-2.5 py-2 md:flex-row md:gap-0;
+  }
+  .image_div {
+    @apply flex-center mt-5 h-[142px] w-full cursor-pointer flex-col gap-3 rounded-xl border-[3.2px] border-dashed border-black-6 bg-black-1;
+  }
+  .carousel_box {
+    @apply relative flex h-[250px] w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none;
+  }
   .button_bold-16 {
     @apply text-[16px] font-bold text-white-1 transition-all duration-500;
   }

@@ -4,26 +4,18 @@ import { useUploadFiles } from "@xixixao/uploadstuff/react";
 import { useAction, useMutation } from "convex/react";
 import { Loader } from "lucide-react";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
+import { GenerateThumbnailProps } from "@/types";
 
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "./ui/use-toast";
-
-interface GenerateThumbnailProps {
-  setImage: Dispatch<SetStateAction<string>>;
-  setImageStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
-  image: string;
-  imagePrompt: string;
-  setImagePrompt: Dispatch<SetStateAction<string>>;
-}
 
 const GenerateThumbnail = ({
   setImage,
@@ -96,7 +88,7 @@ const GenerateThumbnail = ({
 
   return (
     <>
-      <div className="mt-[30px] flex w-full max-w-[520px] flex-col justify-between gap-2 rounded-lg border border-black-6 bg-black-1 px-2.5 py-2 md:flex-row md:gap-0">
+      <div className="generate_thumbnail">
         <Button
           type="button"
           onClick={() => setIsAiThumbnail(true)}
@@ -150,7 +142,7 @@ const GenerateThumbnail = ({
         </div>
       ) : (
         <div
-          className="flex-center mt-5 h-[142px] w-full cursor-pointer flex-col gap-3 rounded-xl border-[3.2px] border-dashed border-black-6 bg-black-1"
+          className="image_div"
           onClick={() => {
             imageRef?.current?.click();
           }}

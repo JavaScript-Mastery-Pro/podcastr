@@ -4,19 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 import { useAudio } from "@/providers/AudioProvider";
-
-interface LatestPodcastCardProps {
-  imgUrl: string;
-  title: string;
-  duration: string;
-  index: number;
-  audioUrl: string;
-  author: string;
-  views: number;
-  podcastId: Id<"podcasts">;
-}
+import { LatestPodcastCardProps } from "@/types";
 
 const IconWithDescription = ({
   img,

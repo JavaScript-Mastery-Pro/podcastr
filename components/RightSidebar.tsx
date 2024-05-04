@@ -13,7 +13,7 @@ const RightSidebar = async () => {
   const user = await currentUser();
   const topPodcasters = await fetchQuery(api.users.getTopUserByPodcastCount);
   return (
-    <section className="custom-scrollbar sticky right-0 top-0 flex max-h-dvh w-[310px] flex-col overflow-y-auto border-none bg-black-1 px-[30px] pt-8 dark:shadow-none max-xl:hidden">
+    <section className="custom-scrollbar right_sidebar">
       <SignedIn>
         <Link
           href={`/profile/${user?.id}`}

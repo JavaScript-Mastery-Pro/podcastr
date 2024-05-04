@@ -45,7 +45,7 @@ const Carousel = ({ fansLikeDetail }: CarouselProps) => {
         {filteredFansLikeDetail.slice(0, 5).map((item) => (
           <figure
             key={item._id}
-            className="relative flex h-[250px] w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none"
+            className=" carousel_box"
             onClick={() =>
               router.push(`/podcaster/${item.podcast[0]?.pocastId}`)
             }

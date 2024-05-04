@@ -3,28 +3,16 @@
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
 import { useAction, useMutation } from "convex/react";
 import { Loader } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import { GeneratePodcastProps } from "@/types";
 
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "./ui/use-toast";
-
-type VoiceType = "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer";
-
-interface GeneratePodcastProps {
-  voiceType: VoiceType;
-  setAudio: Dispatch<SetStateAction<string>>;
-  audio: string;
-  setAudioStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
-  voicePrompt: string;
-  setVoicePrompt: Dispatch<SetStateAction<string>>;
-  setAudioDuration: Dispatch<SetStateAction<number>>;
-}
 
 const GeneratePodcast = ({
   voiceType,

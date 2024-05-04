@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import { PodcastDetailPlayerProps } from "@/types";
 
 import {
   DropdownMenu,
@@ -14,17 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useToast } from "./ui/use-toast";
-
-interface PodcastDetailPlayerProps {
-  audioUrl: string;
-  podcastTitle: string;
-  author: string;
-  isOwner: boolean;
-  imageUrl: string;
-  podcastId: Id<"podcasts">;
-  imageStorageId: Id<"_storage">;
-  audioStorageId: Id<"_storage">;
-}
 
 const PodcastDetailPlayer = ({
   audioUrl,

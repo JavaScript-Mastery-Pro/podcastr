@@ -74,18 +74,20 @@ const ProfileCard = ({
             <span className="font-normal text-white-2">monthly listeners</span>
           </h2>
         </figure>
-        <Button
-          onClick={playRandomPodcast}
-          className="text-16 bg-orange-1 font-extrabold text-white-1"
-        >
-          <Image
-            src="/icons/randomPlay.svg"
-            width={20}
-            height={20}
-            alt="random play"
-          />{" "}
-          &nbsp; Play a random podcast
-        </Button>
+        {podcastData?.podcasts.length > 0 && (
+          <Button
+            onClick={playRandomPodcast}
+            className="text-16 bg-orange-1 font-extrabold text-white-1"
+          >
+            <Image
+              src="/icons/randomPlay.svg"
+              width={20}
+              height={20}
+              alt="random play"
+            />{" "}
+            &nbsp; Play a random podcast
+          </Button>
+        )}
       </div>
     </div>
   );
