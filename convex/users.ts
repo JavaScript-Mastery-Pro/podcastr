@@ -65,7 +65,11 @@ export const createUser = internalMutation({
 });
 
 export const updateUser = internalMutation({
-  args: { clerkId: v.string(), imageUrl: v.string() },
+  args: {
+    clerkId: v.string(),
+    imageUrl: v.string(),
+    email: v.string(),
+  },
   async handler(ctx, args) {
     const user = await ctx.db
       .query("users")
@@ -78,7 +82,21 @@ export const updateUser = internalMutation({
 
     await ctx.db.patch(user._id, {
       imageUrl: args.imageUrl,
+      email: args.email,
     });
+
+    const podcast = await ctx.db
+      .query("podcasts")
+      .filter((q) => q.eq(q.field("authorId"), args.clerkId))
+      .collect();
+
+    await Promise.all(
+      podcast.map(async (p) => {
+        await ctx.db.patch(p._id, {
+          authorImageUrl: args.imageUrl,
+        });
+      })
+    );
   },
 });
 

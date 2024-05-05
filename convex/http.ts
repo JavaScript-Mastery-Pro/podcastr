@@ -27,6 +27,7 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
       await ctx.runMutation(internal.users.updateUser, {
         clerkId: event.data.id,
         imageUrl: event.data.image_url,
+        email: event.data.email_addresses[0].email_address,
       });
       break;
     case "user.deleted":

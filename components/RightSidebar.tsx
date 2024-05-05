@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedIn, useUser } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,21 +17,19 @@ const RightSidebar = () => {
   return (
     <section className="custom-scrollbar right_sidebar">
       <SignedIn>
-        <Link
-          href={`/profile/${user?.id}`}
-          className="flex items-center gap-4 pb-12"
-        >
-          <Image
-            src={user?.imageUrl || "/icons/avatar.svg"}
-            alt="user image"
-            width={45}
-            height={45}
-            className="rounded-full"
+        <div className="flex items-center gap-4 pb-12">
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: "size-10",
+              },
+            }}
+            afterSignOutUrl="/"
           />
           <h1 className="text-16 truncate font-semibold text-white-1">
             {`${user?.firstName} `}
           </h1>
-        </Link>
+        </div>
       </SignedIn>
       <section className="flex flex-col gap-4">
         <Header headerTitle="Fans Like You" />
