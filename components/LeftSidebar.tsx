@@ -20,7 +20,7 @@ const LeftSidebar = () => {
 
   return (
     <section
-      className={cn("left_sidebar", {
+      className={cn("left_sidebar h-[calc(100vh-5px)]", {
         "h-[calc(100vh-116px)]": audio?.audioUrl,
       })}
     >
