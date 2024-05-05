@@ -66,6 +66,7 @@ const PodcastDetailPage = ({
         podcastId={podcast?._id!}
         audioStorageId={podcast?.audioStorageId!}
         isOwner={isOwner}
+        authorImageUrl={podcast?.authorImageUrl!}
       />
       <p className="text-16 pb-8 pt-[45px] font-medium text-white-2 max-md:text-center">
         {podcast?.podcastDescription}

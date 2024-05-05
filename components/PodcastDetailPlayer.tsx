@@ -24,6 +24,7 @@ const PodcastDetailPlayer = ({
   imageStorageId,
   audioStorageId,
   isOwner,
+  authorImageUrl,
 }: PodcastDetailPlayerProps) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -99,7 +100,7 @@ const PodcastDetailPlayer = ({
             </h1>
             <figure className="flex items-center gap-2">
               <Image
-                src="/icons/caster3.png"
+                src={authorImageUrl}
                 width={30}
                 height={30}
                 alt="Caster icon"

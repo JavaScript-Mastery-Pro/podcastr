@@ -94,4 +94,5 @@ export interface PodcastDetailPlayerProps {
   podcastId: Id<"podcasts">;
   imageStorageId: Id<"_storage">;
   audioStorageId: Id<"_storage">;
+  authorImageUrl: string;
 }
