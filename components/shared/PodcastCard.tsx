@@ -9,14 +9,14 @@ import { Id } from "@/convex/_generated/dataModel";
 interface PodcastCardProps {
   imgUrl: string;
   title: string;
-  author: string;
+  description: string;
   podcastId: Id<"podcasts">;
 }
 
 const PodcastCard = ({
   imgUrl,
   title,
-  author,
+  description,
   podcastId,
 }: PodcastCardProps) => {
   const router = useRouter();
@@ -40,8 +40,8 @@ const PodcastCard = ({
         />
         <div className="flex flex-col">
           <h1 className="text-16 truncate font-bold text-white-1">{title}</h1>
-          <h2 className="text-12 font-normal capitalize text-white-4">
-            {author}
+          <h2 className="text-12 truncate font-normal capitalize text-white-4">
+            {description}
           </h2>
         </div>
       </figure>

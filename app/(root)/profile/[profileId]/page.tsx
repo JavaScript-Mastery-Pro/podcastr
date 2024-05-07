@@ -44,7 +44,7 @@ const ProfilePage = ({
                   key={podcast._id}
                   imgUrl={podcast.imageUrl!}
                   title={podcast.podcastTitle!}
-                  author={podcast.author}
+                  description={podcast.podcastDescription}
                   podcastId={podcast._id}
                 />
               ))}

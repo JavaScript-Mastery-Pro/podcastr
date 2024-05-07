@@ -55,7 +55,7 @@ const CreatePodcast = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const createPodcast = useMutation(api.podcasts.createPodcast);
-  const [voiceType, setVoiceType] = useState<VoiceType>("alloy");
+  const [voiceType, setVoiceType] = useState<VoiceType | null>();
   const voiceDetails = useQuery(api.voice.getAllVoices);
 
   const voice = voiceDetails?.find((voice) => voice.voiceType === voiceType);
@@ -78,7 +78,7 @@ const CreatePodcast = () => {
         audioUrl,
         imageUrl,
         imageStorageId: imageStorageId as Id<"_storage">,
-        voiceType,
+        voiceType: voiceType as VoiceType,
         voicePrompt,
         imagePrompt,
         views: 0,
@@ -183,7 +183,7 @@ const CreatePodcast = () => {
             <GeneratePodcast
               setAudioStorageId={setAudioStorageId}
               setAudio={setAudioUrl}
-              voiceType={voiceType}
+              voiceType={voiceType!}
               audio={audioUrl}
               voicePrompt={voicePrompt}
               setVoicePrompt={setVoicePrompt}

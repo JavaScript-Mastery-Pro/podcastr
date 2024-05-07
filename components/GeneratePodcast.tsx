@@ -32,6 +32,13 @@ const GeneratePodcast = ({
   const generatePodcast = async () => {
     setIsGenerating(true);
     setAudio("");
+    if (!voicePrompt) {
+      toast({
+        title: "Please provide a voiceType to generate podcast",
+      });
+      setIsGenerating(false);
+      return;
+    }
     try {
       const response = await getPodcastAudio({
         voice: voiceType,
