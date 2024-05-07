@@ -24,28 +24,26 @@ const RightSidebar = () => {
       })}
     >
       <SignedIn>
-        <div className="flex justify-between">
-          <figure className="flex items-center gap-4 pb-12">
-            <Image
-              src={user?.imageUrl!}
-              alt="profile"
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
+        <Link href={`/profile/${user?.id}`} className="flex gap-3 pb-12">
+          <Image
+            src={user?.imageUrl!}
+            alt="profile"
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
+          <div className="flex w-full items-center justify-between">
             <h1 className="text-16 truncate font-semibold text-white-1">
               {`${user?.firstName}`} {user?.lastName && `${user?.lastName}`}
             </h1>
-          </figure>
-          <Link href={`/profile/${user?.id}`} className="mt-3">
             <Image
               src="/icons/right-arrow.svg"
               alt="arrow"
               width={24}
               height={24}
             />
-          </Link>
-        </div>
+          </div>
+        </Link>
       </SignedIn>
       <section className="flex flex-col gap-4">
         <Header headerTitle="Fans Like You" />

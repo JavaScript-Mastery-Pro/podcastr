@@ -74,6 +74,13 @@ const CreatePodcast = () => {
   const handleCreatePodcast = async (data: z.infer<typeof formSchema>) => {
     try {
       setIsSubmitting(true);
+      if (!audioUrl || !imageUrl || !voiceType) {
+        toast({
+          title: "Please generate audio and image",
+        });
+        setIsSubmitting(false);
+        return;
+      }
       const podcast = await createPodcast({
         audioStorageId: audioStorageId as Id<"_storage">,
         podcastTitle: data.podcastTitle,

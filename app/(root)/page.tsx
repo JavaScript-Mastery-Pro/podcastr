@@ -17,17 +17,15 @@ const Home = () => {
       <section className="flex flex-col gap-5">
         <h1 className="text-20 font-bold text-white-1">Trending Podcasts</h1>
         <div className="podcast_grid">
-          {trendingPodcasts
-            ?.slice(0, 4)
-            .map((podcast) => (
-              <PodcastCard
-                key={podcast._id}
-                imgUrl={podcast.imageUrl!}
-                title={podcast.podcastTitle!}
-                description={podcast.podcastDescription}
-                podcastId={podcast._id}
-              />
-            ))}
+          {trendingPodcasts?.map((podcast) => (
+            <PodcastCard
+              key={podcast._id}
+              imgUrl={podcast.imageUrl!}
+              title={podcast.podcastTitle!}
+              description={podcast.podcastDescription}
+              podcastId={podcast._id}
+            />
+          ))}
         </div>
       </section>
       <section className="flex flex-col gap-7">

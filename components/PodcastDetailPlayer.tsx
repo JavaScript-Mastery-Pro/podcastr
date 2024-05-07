@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 import { api } from "@/convex/_generated/api";
+import { useAudio } from "@/providers/AudioProvider";
 import { PodcastDetailPlayerProps } from "@/types";
 
 import LoaderSpinner from "./Loader";
@@ -29,6 +30,7 @@ const PodcastDetailPlayer = ({
 }: PodcastDetailPlayerProps) => {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { audio, setAudio } = useAudio();
   const { toast } = useToast();
   const [isPlaying, setIsPlaying] = useState(false);
   const deletePodcast = useMutation(api.podcasts.deletePodcast);
@@ -53,6 +55,9 @@ const PodcastDetailPlayer = ({
     if (audioRef.current?.paused) {
       audioRef.current?.play();
       setIsPlaying(true);
+      if (audio?.audioUrl) {
+        setAudio(undefined);
+      }
     } else {
       audioRef.current?.pause();
       setIsPlaying(false);
