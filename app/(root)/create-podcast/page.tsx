@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "convex/react";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -58,7 +58,10 @@ const CreatePodcast = () => {
   const [voiceType, setVoiceType] = useState<VoiceType | null>();
   const voiceDetails = useQuery(api.voice.getAllVoices);
 
-  const voice = voiceDetails?.find((voice) => voice.voiceType === voiceType);
+  const voice = useMemo(
+    () => voiceDetails?.find((voice) => voice.voiceType === voiceType),
+    [voiceDetails, voiceType]
+  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

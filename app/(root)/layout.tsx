@@ -4,7 +4,6 @@ import LeftSidebar from "@/components/LeftSidebar";
 import MobileNav from "@/components/MobileNav";
 import PodcastPlayer from "@/components/PodcastPlayer";
 import RightSidebar from "@/components/RightSidebar";
-import Searchbar from "@/components/Searchbar";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
@@ -31,7 +30,6 @@ export default function RootLayout({
             </div>
             <div className="flex flex-col md:pb-14">
               <Toaster />
-              <Searchbar />
               {children}
             </div>
           </div>
