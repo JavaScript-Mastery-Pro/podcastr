@@ -2,13 +2,13 @@
 import { useMutation } from "convex/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
 
 import { api } from "@/convex/_generated/api";
 import { useAudio } from "@/providers/AudioProvider";
 import { PodcastDetailPlayerProps } from "@/types";
 
 import LoaderSpinner from "./Loader";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,10 +29,8 @@ const PodcastDetailPlayer = ({
   authorImageUrl,
 }: PodcastDetailPlayerProps) => {
   const router = useRouter();
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const { audio, setAudio } = useAudio();
+  const { setAudio } = useAudio();
   const { toast } = useToast();
-  const [isPlaying, setIsPlaying] = useState(false);
   const deletePodcast = useMutation(api.podcasts.deletePodcast);
 
   const handleDelete = async () => {
@@ -51,48 +49,20 @@ const PodcastDetailPlayer = ({
     }
   };
 
-  const togglePlayPause = () => {
-    if (audioRef.current?.paused) {
-      audioRef.current?.play();
-      setIsPlaying(true);
-      if (audio?.audioUrl) {
-        setAudio(undefined);
-      }
-    } else {
-      audioRef.current?.pause();
-      setIsPlaying(false);
-    }
-  };
-
-  const forward = () => {
-    if (
-      audioRef.current &&
-      audioRef.current.currentTime &&
-      audioRef.current.duration &&
-      audioRef.current.currentTime + 5 < audioRef.current.duration
-    ) {
-      audioRef.current.currentTime += 5;
-    }
-  };
-
-  const rewind = () => {
-    if (audioRef.current && audioRef.current.currentTime - 5 > 0) {
-      audioRef.current.currentTime -= 5;
-    } else if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-    }
+  const handlePlay = () => {
+    setAudio({
+      title: podcastTitle,
+      audioUrl,
+      imageUrl,
+      author,
+      podcastId,
+    });
   };
 
   if (!imageUrl || !authorImageUrl) return <LoaderSpinner />;
 
   return (
     <div className="mt-6 flex w-full justify-between max-md:justify-center">
-      <audio
-        ref={audioRef}
-        src={audioUrl}
-        className="hidden"
-        onEnded={() => setIsPlaying(false)}
-      />
       <div className="flex flex-col gap-8 max-md:items-center md:flex-row">
         <Image
           src={imageUrl}
@@ -117,32 +87,19 @@ const PodcastDetailPlayer = ({
               <h2 className="text-16 font-normal text-white-3">{author}</h2>
             </figure>
           </article>
-          <figure className="flex gap-8">
+
+          <Button
+            onClick={handlePlay}
+            className="text-16 bg-orange-1 font-extrabold text-white-1"
+          >
             <Image
-              src="/icons/reverse.svg"
-              width={24}
-              height={24}
-              alt="Rewind icon"
-              onClick={rewind}
-              className="cursor-pointer"
-            />
-            <Image
-              src={isPlaying ? "/icons/Pause.svg" : "/icons/Play.svg"}
-              width={30}
-              height={30}
-              alt="Rewind icon"
-              onClick={togglePlayPause}
-              className="cursor-pointer"
-            />
-            <Image
-              src="/icons/forward.svg"
-              width={24}
-              height={24}
-              alt="Forward icon"
-              onClick={forward}
-              className="cursor-pointer"
-            />
-          </figure>
+              src="/icons/Play.svg"
+              width={20}
+              height={20}
+              alt="random play"
+            />{" "}
+            &nbsp; Play a podcast
+          </Button>
         </div>
       </div>
       {isOwner && (
