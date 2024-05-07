@@ -1,6 +1,5 @@
 "use client";
 
-import { SignedIn, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,7 +15,6 @@ import { cn } from "@/lib/utils";
 
 const MobileNav = () => {
   const pathname = usePathname();
-  const { user } = useUser();
   return (
     <section className="w-full max-w-[264px]">
       <Sheet>
@@ -72,38 +70,6 @@ const MobileNav = () => {
                     </SheetClose>
                   );
                 })}
-                <SignedIn>
-                  <Link
-                    href={user?.id ? `/profile/${user?.id}` : "/"}
-                    className={cn(
-                      "flex gap-3 items-center py-4 max-lg:px-4 justify-center lg:justify-start ",
-                      {
-                        "bg-nav-focus border-r-4 border-orange-1":
-                          pathname === "/profile" ||
-                          pathname.startsWith("/profile"),
-                      }
-                    )}
-                  >
-                    <Image
-                      src="/icons/profile.svg"
-                      alt="profile"
-                      width={24}
-                      height={24}
-                    />
-                    <p
-                      className={cn(
-                        "text-16 font-semibold text-white-2 max-lg:hidden",
-                        {
-                          "text-white-1":
-                            pathname === "/profile" ||
-                            pathname.startsWith("/profile"),
-                        }
-                      )}
-                    >
-                      My Profile
-                    </p>
-                  </Link>
-                </SignedIn>
               </nav>
             </SheetClose>
           </div>

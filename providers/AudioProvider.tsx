@@ -1,12 +1,12 @@
 "use client";
-import { usePathname } from "next/navigation";
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 interface AudioProps {
   title: string;
   audioUrl: string;
   author: string;
   imageUrl: string;
+  podcastId: string;
 }
 
 interface AudioContextType {
@@ -18,11 +18,6 @@ const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
 const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   const [audio, setAudio] = useState<AudioProps | undefined>();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    setAudio(undefined);
-  }, [pathname]);
 
   return (
     <AudioContext.Provider value={{ audio, setAudio }}>

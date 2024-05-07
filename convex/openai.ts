@@ -57,3 +57,26 @@ export const generateAudioAction = action({
     return buffer;
   },
 });
+
+export const generateRealTimeAudioAction = action({
+  args: {
+    voiceType: v.union(
+      v.literal("alloy"),
+      v.literal("echo"),
+      v.literal("fable"),
+      v.literal("onyx"),
+      v.literal("nova"),
+      v.literal("shimmer")
+    ),
+  },
+  handler: async (ctx, args) => {
+    const response = await openai.audio.speech.create({
+      model: "tts-1",
+      voice: args.voiceType,
+      input: `Hello, I am your voice ${args.voiceType} type.`,
+    });
+
+    const buffer = await response.arrayBuffer();
+    return buffer;
+  },
+});

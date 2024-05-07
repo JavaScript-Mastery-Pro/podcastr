@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { voiceDetails } from "@/constants";
+// import { voiceDetails } from "@/constants";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 const formSchema = z.object({
@@ -57,6 +57,10 @@ const CreatePodcast = () => {
   const [imageUrl, setImageUrl] = useState("");
   const createPodcast = useMutation(api.podcasts.createPodcast);
   const [voiceType, setVoiceType] = useState<VoiceType>("alloy");
+  const voiceDetails = useQuery(api.voice.getAllVoices);
+
+  const voice = voiceDetails?.find((voice) => voice.voiceType === voiceType);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,6 +68,7 @@ const CreatePodcast = () => {
       podcastDescription: "",
     },
   });
+
   const handleCreatePodcast = async (data: z.infer<typeof formSchema>) => {
     try {
       setIsSubmitting(true);
@@ -135,16 +140,24 @@ const CreatePodcast = () => {
                   <SelectValue placeholder="Select AI Voice" />
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
-                  {voiceDetails.map((category) => (
+                  {voiceDetails?.map((category) => (
                     <SelectItem
-                      value={category.name}
+                      key={category._id}
+                      value={category.voiceType as VoiceType}
                       className="capitalize focus:bg-orange-1"
-                      key={category.id}
                     >
-                      {category.name}
+                      {category.voiceType}
                     </SelectItem>
                   ))}
                 </SelectContent>
+                {voice?.voiceUrl && (
+                  <audio
+                    src={voice.voiceUrl}
+                    autoPlay
+                    controls
+                    className="hidden"
+                  />
+                )}
               </Select>
             </div>
             <FormField

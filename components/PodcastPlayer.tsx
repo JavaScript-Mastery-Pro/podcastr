@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { formatTime } from "@/lib/formatTime";
@@ -103,7 +104,7 @@ const PodcastPlayer = () => {
         className="w-full"
         max={duration}
       />
-      <section className="glassmorphism-black flex h-[112px]  w-full items-center justify-between px-4 md:px-12">
+      <section className="glassmorphism-black flex h-[112px] w-full items-center justify-between px-4 max-md:justify-center max-md:gap-5 md:px-12">
         <audio
           ref={audioRef}
           src={audio?.audioUrl}
@@ -112,13 +113,15 @@ const PodcastPlayer = () => {
           onEnded={handleAudioEnded}
         />
         <div className="flex items-center gap-4 max-md:hidden">
-          <Image
-            src={audio?.imageUrl! || "/images/player1.png"}
-            width={64}
-            height={64}
-            alt="player1"
-            className="rounded-xl"
-          />
+          <Link href={`/podcast/${audio?.podcastId}`}>
+            <Image
+              src={audio?.imageUrl! || "/images/player1.png"}
+              width={64}
+              height={64}
+              alt="player1"
+              className="rounded-xl"
+            />
+          </Link>
           <div className="flex flex-col">
             <h2 className="text-14 font-semibold text-white-1">
               {audio?.title}
@@ -126,14 +129,17 @@ const PodcastPlayer = () => {
             <p className="text-12 font-normal text-white-2">{audio?.author}</p>
           </div>
         </div>
-        <div className="flex-center cursor-pointer gap-6">
-          <Image
-            src={"/icons/reverse.svg"}
-            width={24}
-            height={24}
-            alt="rewind"
-            onClick={rewind}
-          />
+        <div className="flex-center cursor-pointer gap-3 md:gap-6">
+          <div className="flex items-center gap-1.5">
+            <Image
+              src={"/icons/reverse.svg"}
+              width={24}
+              height={24}
+              alt="rewind"
+              onClick={rewind}
+            />
+            <h2 className="text-12 font-bold text-white-4">-5</h2>
+          </div>
           <Image
             src={isPlaying ? "/icons/Pause.svg" : "/icons/Play.svg"}
             width={30}
@@ -141,16 +147,19 @@ const PodcastPlayer = () => {
             alt="play"
             onClick={togglePlayPause}
           />
-          <Image
-            src={"/icons/forward.svg"}
-            width={24}
-            height={24}
-            alt="forward"
-            onClick={forward}
-          />
+          <div className="flex items-center gap-1.5">
+            <h2 className="text-12 font-bold text-white-4">+5</h2>
+            <Image
+              src={"/icons/forward.svg"}
+              width={24}
+              height={24}
+              alt="forward"
+              onClick={forward}
+            />
+          </div>
         </div>
-        <div className="flex w-full max-w-[250px] items-center gap-6">
-          <h2 className="text-16 font-normal text-white-2">
+        <div className="flex items-center gap-6">
+          <h2 className="text-16 font-normal text-white-2 max-md:hidden">
             {formatTime(duration)}
           </h2>
           <div className="flex w-full gap-2">

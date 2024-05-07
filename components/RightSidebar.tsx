@@ -1,34 +1,50 @@
 "use client";
 
-import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
+import { SignedIn, useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 import { api } from "@/convex/_generated/api";
+import { cn } from "@/lib/utils";
+import { useAudio } from "@/providers/AudioProvider";
 
 import Carousel from "./Carousel";
 import Header from "./shared/Header";
 
 const RightSidebar = () => {
   const { user } = useUser();
+  const { audio } = useAudio();
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   return (
-    <section className="custom-scrollbar right_sidebar">
+    <section
+      className={cn("right_sidebar h-[calc(100vh-5px)]", {
+        "h-[calc(100vh-116px)]": audio?.audioUrl,
+      })}
+    >
       <SignedIn>
-        <div className="flex items-center gap-4 pb-12">
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: "size-10",
-              },
-            }}
-            afterSignOutUrl="/"
-          />
-          <h1 className="text-16 truncate font-semibold text-white-1">
-            {`${user?.firstName} `}
-          </h1>
+        <div className="flex justify-between">
+          <figure className="flex items-center gap-4 pb-12">
+            <Image
+              src={user?.imageUrl!}
+              alt="profile"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+            <h1 className="text-16 truncate font-semibold text-white-1">
+              {`${user?.firstName}`} {user?.lastName && `${user?.lastName}`}
+            </h1>
+          </figure>
+          <Link href={`/profile/${user?.id}`} className="mt-3">
+            <Image
+              src="/icons/right-arrow.svg"
+              alt="arrow"
+              width={24}
+              height={24}
+            />
+          </Link>
         </div>
       </SignedIn>
       <section className="flex flex-col gap-4">
@@ -38,10 +54,10 @@ const RightSidebar = () => {
       <section className="flex flex-col gap-8 pt-12">
         <Header headerTitle="Top Podcasters" />
         <div className="flex flex-col gap-6">
-          {topPodcasters?.slice(0, 10).map((podcaster) => (
+          {topPodcasters?.slice(0, 4).map((podcaster) => (
             <div key={podcaster._id} className="flex justify-between">
               <figure className="flex items-center gap-2">
-                <Link href={`/podcaster/${podcaster.clerkId}`}>
+                <Link href={`/profile/${podcaster.clerkId}`}>
                   <Image
                     src={podcaster.imageUrl}
                     alt="casters"

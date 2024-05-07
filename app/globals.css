@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: #101114;
+}
+
 @layer utilities {
   .input-class {
     @apply text-16 placeholder:text-16 bg-black-1 rounded-[6px] placeholder:text-gray-1 text-white-1 border-none;
@@ -16,7 +20,7 @@
     @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4;
   }
   .right_sidebar {
-    @apply sticky right-0 top-0 flex h-[calc(100vh-5px)] w-[310px] flex-col overflow-y-auto border-none bg-black-1 px-[30px] pt-8 max-xl:hidden;
+    @apply sticky right-0 top-0 flex w-[310px] flex-col overflow-y-hidden border-none bg-black-1 px-[30px] pt-8 max-xl:hidden;
   }
   .left_sidebar {
     @apply sticky left-0 top-0 flex w-fit flex-col  justify-between  border-none  bg-black-1 pt-8 text-white-1 max-md:hidden lg:w-[270px] lg:pl-8;
@@ -28,7 +32,7 @@
     @apply flex-center mt-5 h-[142px] w-full cursor-pointer flex-col gap-3 rounded-xl border-[3.2px] border-dashed border-black-6 bg-black-1;
   }
   .carousel_box {
-    @apply relative flex h-[250px] w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none;
+    @apply relative flex h-fit aspect-square w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none;
   }
   .button_bold-16 {
     @apply text-[16px] font-bold text-white-1 transition-all duration-500;

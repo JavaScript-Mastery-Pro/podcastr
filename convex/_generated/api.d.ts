@@ -19,6 +19,7 @@ import type * as http from "../http.js";
 import type * as openai from "../openai.js";
 import type * as podcasts from "../podcasts.js";
 import type * as users from "../users.js";
+import type * as voice from "../voice.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -34,6 +35,7 @@ declare const fullApi: ApiFromModules<{
   openai: typeof openai;
   podcasts: typeof podcasts;
   users: typeof users;
+  voice: typeof voice;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

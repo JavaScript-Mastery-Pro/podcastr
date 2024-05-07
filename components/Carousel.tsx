@@ -48,15 +48,13 @@ const Carousel = ({ fansLikeDetail }: CarouselProps) => {
           <figure
             key={item._id}
             className=" carousel_box"
-            onClick={() =>
-              router.push(`/podcaster/${item.podcast[0]?.pocastId}`)
-            }
+            onClick={() => router.push(`/podcast/${item.podcast[0]?.pocastId}`)}
           >
             <Image
               src={item.imageUrl}
               alt="card1"
               fill
-              className="absolute size-full rounded-xl border-none object-contain"
+              className="absolute size-full rounded-xl border-none "
             />
             <div className="glassmorphism-black relative z-10 flex flex-col rounded-b-xl p-4">
               <h2 className="text-14 font-semibold text-white-1">

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useAudio } from "@/providers/AudioProvider";
 import { PodcastProps, ProfilePodcastProps } from "@/types";
 
+import LoaderSpinner from "./Loader";
 import { Button } from "./ui/button";
 
 interface ProfileCardProps {
@@ -19,6 +20,7 @@ const ProfileCard = ({
   userFirstName,
 }: ProfileCardProps) => {
   const { setAudio } = useAudio();
+
   const [randomPodcast, setRandomPodcast] = useState<PodcastProps | null>(null);
   const playRandomPodcast = () => {
     const randomIndex = Math.floor(Math.random() * podcastData.podcasts.length);
@@ -33,19 +35,22 @@ const ProfileCard = ({
         audioUrl: randomPodcast.audioUrl || "",
         imageUrl: randomPodcast.imageUrl || "",
         author: randomPodcast.author,
+        podcastId: randomPodcast._id,
       });
     }
     console.log("random is selected");
   }, [randomPodcast, setAudio]);
 
+  if (!imageUrl) return <LoaderSpinner />;
+
   return (
-    <div className="mt-6 flex flex-col gap-6 md:flex-row">
+    <div className="mt-6 flex flex-col gap-6 max-md:items-center md:flex-row">
       <Image
-        src={imageUrl!}
+        src={imageUrl}
         width={250}
         height={250}
         alt="Podcaster"
-        className="rounded-lg"
+        className="aspect-square rounded-lg"
       />
       <div className="flex flex-col justify-center max-md:items-center">
         <div className="flex flex-col gap-2.5">

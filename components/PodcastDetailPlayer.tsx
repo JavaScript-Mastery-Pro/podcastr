@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import { api } from "@/convex/_generated/api";
 import { PodcastDetailPlayerProps } from "@/types";
 
+import LoaderSpinner from "./Loader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,6 +78,8 @@ const PodcastDetailPlayer = ({
     }
   };
 
+  if (!imageUrl || !authorImageUrl) return <LoaderSpinner />;
+
   return (
     <div className="mt-6 flex w-full justify-between max-md:justify-center">
       <audio
@@ -91,7 +94,7 @@ const PodcastDetailPlayer = ({
           width={250}
           height={250}
           alt="Podcast image"
-          className="h-full max-h-[250px] w-[250px]  flex-none rounded-lg object-cover"
+          className="aspect-square rounded-lg"
         />
         <div className="flex w-full flex-col gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">

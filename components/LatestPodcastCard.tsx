@@ -43,7 +43,7 @@ const LatestPodcastCard = ({
   const updateViews = useMutation(api.podcasts.updatePodcastViews);
 
   const handleClick = async () => {
-    setAudio({ title, author, imageUrl: imgUrl, audioUrl });
+    setAudio({ title, author, imageUrl: imgUrl, audioUrl, podcastId });
     await updateViews({ podcastId });
   };
 

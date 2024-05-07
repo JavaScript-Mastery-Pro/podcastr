@@ -24,7 +24,9 @@ const PodcastCard = ({
 
   const handleViews = async () => {
     await updateViews({ podcastId });
-    router.push(`/podcast/${podcastId}`);
+    router.push(`/podcast/${podcastId}`, {
+      scroll: true,
+    });
   };
   return (
     <div onClick={handleViews} className="cursor-pointer">
@@ -34,7 +36,7 @@ const PodcastCard = ({
           width={174}
           height={174}
           alt="pod"
-          className="h-[220px] w-full rounded-xl 2xl:size-[200px]"
+          className="aspect-square h-fit w-full rounded-xl xl:size-[200px]"
         />
         <div className="flex flex-col">
           <h1 className="text-16 truncate font-bold text-white-1">{title}</h1>
