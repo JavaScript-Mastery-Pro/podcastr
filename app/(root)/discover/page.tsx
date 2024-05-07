@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "convex/react";
-import { useSearchParams } from "next/navigation";
 
 import EmptyState from "@/components/EmptyState";
 import LoaderSpinner from "@/components/Loader";
@@ -10,9 +9,14 @@ import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 
-const DiscoverPage = () => {
-  const searchParams = useSearchParams();
-  const search = searchParams.get("search") || "";
+const DiscoverPage = ({
+  searchParams,
+}: {
+  searchParams: {
+    search: string;
+  };
+}) => {
+  const search = searchParams.search || "";
   const podcastsData = useQuery(api.podcasts.getPodcastBySearch, {
     search,
   });
