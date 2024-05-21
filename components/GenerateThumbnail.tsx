@@ -33,13 +33,11 @@ const GenerateThumbnail = ({
   const { startUpload } = useUploadFiles(generateUploadUrl);
   const { toast } = useToast();
 
-  const generateImage = async () => {
+  const handleImage = async (blob: Blob, fileName: string) => {
     setIsImageLoading(true);
     setImage("");
     try {
-      const response = await handleGenerateThumbnail({ prompt: imagePrompt });
-      const blob = new Blob([response], { type: "image/png" });
-      const file = new File([blob], `thumbnail-${uuidv4()}`, {
+      const file = new File([blob], fileName, {
         type: "image/png",
       });
       const uploaded = await startUpload([file]);
@@ -52,6 +50,20 @@ const GenerateThumbnail = ({
         title: "Thumbnail generated successfully",
       });
     } catch (error) {
+      console.error("Error handling image", error);
+      toast({
+        title: "Error generating thumbnail",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const generateImage = async () => {
+    try {
+      const response = await handleGenerateThumbnail({ prompt: imagePrompt });
+      const blob = new Blob([response], { type: "image/png" });
+      handleImage(blob, `thumbnail-${uuidv4()}`);
+    } catch (error) {
       console.error("Error generating thumbnail", error);
       toast({
         title: "Error generating thumbnail",
@@ -62,21 +74,12 @@ const GenerateThumbnail = ({
 
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setIsImageLoading(true);
-    setImage("");
     try {
       const files = e.target.files;
       if (!files) return;
-      const fileArray = Array.from(files);
-      const uploaded = await startUpload(fileArray);
-      const storageId = (uploaded[0].response as any).storageId;
-      setImageStorageId(storageId);
-      const imageUrl = await getImageUrl({ storageId });
-      setImage(imageUrl!);
-      setIsImageLoading(false);
-      toast({
-        title: "Thumbnail generated successfully",
-      });
+      const file = files[0];
+      const blob = await file.arrayBuffer().then((ab) => new Blob([ab]));
+      handleImage(blob, file.name);
     } catch (error) {
       console.error("Error uploading image", error);
       toast({

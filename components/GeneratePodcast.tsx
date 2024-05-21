@@ -14,25 +14,19 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "./ui/use-toast";
 
-const GeneratePodcast = ({
-  voiceType,
-  setAudio,
-  setAudioStorageId,
-  audio,
-  voicePrompt,
-  setVoicePrompt,
-  setAudioDuration,
-}: GeneratePodcastProps) => {
+// we can keep the hook in separate file as well.
+const useGeneratePodcast = (props: GeneratePodcastProps) => {
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
   const { startUpload } = useUploadFiles(generateUploadUrl);
   const getAudioUrl = useMutation(api.podcasts.getUrl);
+
   const generatePodcast = async () => {
     setIsGenerating(true);
-    setAudio("");
-    if (!voicePrompt) {
+    props.setAudio("");
+    if (!props.voicePrompt) {
       toast({
         title: "Please provide a voiceType to generate podcast",
       });
@@ -41,8 +35,8 @@ const GeneratePodcast = ({
     }
     try {
       const response = await getPodcastAudio({
-        voice: voiceType,
-        input: voicePrompt,
+        voice: props.voiceType,
+        input: props.voicePrompt,
       });
 
       const blob = new Blob([response], { type: "audio/mpeg" });
@@ -52,19 +46,45 @@ const GeneratePodcast = ({
       });
       const uploaded = await startUpload([file]);
       const storageId = (uploaded[0].response as any).storageId;
-      setAudioStorageId(storageId);
+      props.setAudioStorageId(storageId);
 
       const audioUrl = await getAudioUrl({ storageId });
-      setAudio(audioUrl!);
+      props.setAudio(audioUrl!);
       setIsGenerating(false);
       toast({
         title: "Podcast generated successfully",
       });
     } catch (error) {
       console.error("Error generating and uploading podcast:", error);
+      toast({
+        title: "Error generating podcast",
+        variant: "destructive",
+      });
       setIsGenerating(false);
     }
   };
+
+  return { isGenerating, generatePodcast };
+};
+
+const GeneratePodcast = ({
+  voiceType,
+  setAudio,
+  setAudioStorageId,
+  audio,
+  voicePrompt,
+  setVoicePrompt,
+  setAudioDuration,
+}: GeneratePodcastProps) => {
+  const { isGenerating, generatePodcast } = useGeneratePodcast({
+    voiceType,
+    setAudio,
+    audio,
+    setAudioStorageId,
+    voicePrompt,
+    setVoicePrompt,
+    setAudioDuration,
+  });
   return (
     <div>
       <div className="flex flex-col gap-2.5">
