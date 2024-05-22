@@ -2,10 +2,10 @@
 
 import { useQuery } from "convex/react";
 
+import Header from "@/components/Header";
 import LatestPodcastCard from "@/components/LatestPodcastCard";
 import LoaderSpinner from "@/components/Loader";
-import Header from "@/components/shared/Header";
-import PodcastCard from "@/components/shared/PodcastCard";
+import PodcastCard from "@/components/PodcastCard";
 import { api } from "@/convex/_generated/api";
 import { formatTime } from "@/lib/formatTime";
 import { cn } from "@/lib/utils";
@@ -32,30 +32,7 @@ const Home = () => {
           ))}
         </div>
       </section>
-      <section className="flex flex-col gap-7">
-        <Header titleClassName="text-xl" headerTitle="Latest Podcasts" />
-        <div className="flex w-full flex-col">
-          {latestPodcasts?.slice(0, 8).map((podcast, index) => (
-            <div
-              className={cn("py-2.5", {
-                "border-b border-black-4": index !== latestPodcasts?.length - 1,
-              })}
-              key={podcast._id}
-            >
-              <LatestPodcastCard
-                imgUrl={podcast.imageUrl!}
-                title={podcast.podcastTitle}
-                views={podcast.views}
-                duration={formatTime(podcast.audioDuration)}
-                index={index + 1}
-                audioUrl={podcast.audioUrl!}
-                author={podcast.author}
-                podcastId={podcast._id}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      <Header />
     </div>
   );
 };

@@ -1,19 +1,9 @@
 "use client";
+
 import { usePathname } from "next/navigation";
 import React, { createContext, useState, useContext, useEffect } from "react";
 
-interface AudioProps {
-  title: string;
-  audioUrl: string;
-  author: string;
-  imageUrl: string;
-  podcastId: string;
-}
-
-interface AudioContextType {
-  audio: AudioProps | undefined;
-  setAudio: React.Dispatch<React.SetStateAction<AudioProps | undefined>>;
-}
+import { AudioContextType, AudioProps } from "@/types";
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 

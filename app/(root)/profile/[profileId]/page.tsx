@@ -4,8 +4,8 @@ import { useQuery } from "convex/react";
 
 import EmptyState from "@/components/EmptyState";
 import LoaderSpinner from "@/components/Loader";
+import PodcastCard from "@/components/PodcastCard";
 import ProfileCard from "@/components/ProfileCard";
-import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
 
 const ProfilePage = ({

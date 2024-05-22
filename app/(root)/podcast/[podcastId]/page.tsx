@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import EmptyState from "@/components/EmptyState";
 import LoaderSpinner from "@/components/Loader";
+import PodcastCard from "@/components/PodcastCard";
 import PodcastDetailPlayer from "@/components/PodcastDetailPlayer";
-import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 

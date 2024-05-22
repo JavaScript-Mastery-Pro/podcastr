@@ -73,7 +73,7 @@ export const generateRealTimeAudioAction = action({
     const response = await openai.audio.speech.create({
       model: "tts-1",
       voice: args.voiceType,
-      input: `Hello, I am your voice ${args.voiceType} type.`,
+      input: `Hello, I am ${args.voiceType}.`,
     });
 
     const buffer = await response.arrayBuffer();

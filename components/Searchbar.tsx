@@ -24,7 +24,7 @@ const Searchbar = () => {
   }, [debouncedValue, router, pathname]);
 
   return (
-    <div className={cn("relative block mt-8")}>
+    <div className={"relative mt-8 block"}>
       <Input
         className="input-class py-6 pl-12 focus-visible:ring-orange-1"
         placeholder="Type here to search"

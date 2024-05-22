@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { useAudio } from "@/providers/AudioProvider";
 
 import Carousel from "./Carousel";
-import Header from "./shared/Header";
+import Header from "./Header";
 
 const RightSidebar = () => {
   const { user } = useUser();

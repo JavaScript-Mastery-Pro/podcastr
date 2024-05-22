@@ -4,8 +4,8 @@ import { useQuery } from "convex/react";
 
 import EmptyState from "@/components/EmptyState";
 import LoaderSpinner from "@/components/Loader";
+import PodcastCard from "@/components/PodcastCard";
 import Searchbar from "@/components/Searchbar";
-import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 
@@ -30,9 +30,10 @@ const DiscoverPage = ({
             "text-white-2": search,
           })}
         >
-          {!search ? "Discover Community Podcasts" : `Search results for : `}
-          &nbsp;
-          {search && <span className="text-white-1">{search}</span>}
+          <h1 className="text-20 font-bold text-white-1">
+            {!search ? "Discover Trending Podcasts" : `Search results for: `}
+            {search && <span className="text-white-2">{search}</span>}
+          </h1>
         </h1>
         {podcastsData ? (
           <>

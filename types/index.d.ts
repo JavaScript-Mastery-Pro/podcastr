@@ -1,15 +1,17 @@
+/* eslint-disable no-unused-vars */
+
 import { Dispatch, SetStateAction } from "react";
 
 import { Id } from "@/convex/_generated/dataModel";
 
-export interface EmptyStateProps {
+declare interface EmptyStateProps {
   title: string;
   search?: boolean;
   buttonText?: string;
   buttonLink?: string;
 }
 
-export interface TopPodcastersProps {
+declare interface TopPodcastersProps {
   _id: Id<"users">;
   _creationTime: number;
   email: string;
@@ -23,7 +25,7 @@ export interface TopPodcastersProps {
   totalPodcasts: number;
 }
 
-export interface PodcastProps {
+declare interface PodcastProps {
   _id: Id<"podcasts">;
   _creationTime: number;
   audioStorageId: Id<"_storage"> | null;
@@ -43,20 +45,14 @@ export interface PodcastProps {
   views: number;
 }
 
-export interface ProfilePodcastProps {
+declare interface ProfilePodcastProps {
   podcasts: PodcastProps[];
   listeners: number;
 }
 
-export type VoiceType =
-  | "alloy"
-  | "echo"
-  | "fable"
-  | "onyx"
-  | "nova"
-  | "shimmer";
+type VoiceType = "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer";
 
-export interface GeneratePodcastProps {
+declare interface GeneratePodcastProps {
   voiceType: VoiceType;
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;
@@ -66,7 +62,7 @@ export interface GeneratePodcastProps {
   setAudioDuration: Dispatch<SetStateAction<number>>;
 }
 
-export interface GenerateThumbnailProps {
+declare interface GenerateThumbnailProps {
   setImage: Dispatch<SetStateAction<string>>;
   setImageStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
   image: string;
@@ -74,7 +70,7 @@ export interface GenerateThumbnailProps {
   setImagePrompt: Dispatch<SetStateAction<string>>;
 }
 
-export interface LatestPodcastCardProps {
+declare interface LatestPodcastCardProps {
   imgUrl: string;
   title: string;
   duration: string;
@@ -85,7 +81,7 @@ export interface LatestPodcastCardProps {
   podcastId: Id<"podcasts">;
 }
 
-export interface PodcastDetailPlayerProps {
+declare interface PodcastDetailPlayerProps {
   audioUrl: string;
   podcastTitle: string;
   author: string;
@@ -96,4 +92,17 @@ export interface PodcastDetailPlayerProps {
   audioStorageId: Id<"_storage">;
   authorImageUrl: string;
   authorId: string;
+}
+
+declare interface AudioProps {
+  title: string;
+  audioUrl: string;
+  author: string;
+  imageUrl: string;
+  podcastId: string;
+}
+
+declare interface AudioContextType {
+  audio: AudioProps | undefined;
+  setAudio: React.Dispatch<React.SetStateAction<AudioProps | undefined>>;
 }

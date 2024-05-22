@@ -22,9 +22,10 @@ const ProfileCard = ({
   const { setAudio } = useAudio();
 
   const [randomPodcast, setRandomPodcast] = useState<PodcastProps | null>(null);
+
   const playRandomPodcast = () => {
     const randomIndex = Math.floor(Math.random() * podcastData.podcasts.length);
-    setRandomPodcast(podcastData.podcasts[randomIndex]);
+
     setRandomPodcast(podcastData.podcasts[randomIndex]);
   };
 
@@ -38,7 +39,6 @@ const ProfileCard = ({
         podcastId: randomPodcast._id,
       });
     }
-    console.log("random is selected");
   }, [randomPodcast, setAudio]);
 
   if (!imageUrl) return <LoaderSpinner />;
