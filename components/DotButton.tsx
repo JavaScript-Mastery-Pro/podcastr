@@ -3,12 +3,7 @@ import { EmblaCarouselType } from "embla-carousel";
 import React, { useCallback, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-
-type UseDotButtonType = {
-  selectedIndex: number;
-  scrollSnaps: number[];
-  onDotButtonClick: (index: number) => void;
-};
+import { UseDotButtonType } from "@/types";
 
 export const useDotButton = (
   emblaApi: EmblaCarouselType | undefined,

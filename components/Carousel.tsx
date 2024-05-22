@@ -6,13 +6,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-import { TopPodcastersProps } from "@/types";
+import { CarouselProps } from "@/types";
 
 import { DotButton, useDotButton } from "./DotButton";
-
-interface CarouselProps {
-  fansLikeDetail: TopPodcastersProps[];
-}
 
 const Carousel = ({ fansLikeDetail }: CarouselProps) => {
   const router = useRouter();

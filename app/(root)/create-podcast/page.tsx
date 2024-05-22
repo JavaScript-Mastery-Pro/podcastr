@@ -33,12 +33,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
+import { VoiceType } from "@/types";
 const formSchema = z.object({
   podcastTitle: z.string().min(1, "Podcast Title is required"),
   podcastDescription: z.string().min(1, "Podcast Description is required"),
 });
-
-type VoiceType = "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer";
 
 const CreatePodcast = () => {
   const router = useRouter();

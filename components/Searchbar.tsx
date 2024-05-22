@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { useDebounce } from "@/lib/useDebounce";
-import { cn } from "@/lib/utils";
 
 import { Input } from "./ui/input";
 

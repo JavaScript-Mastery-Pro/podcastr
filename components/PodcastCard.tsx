@@ -4,14 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
-
-interface PodcastCardProps {
-  imgUrl: string;
-  title: string;
-  description: string;
-  podcastId: Id<"podcasts">;
-}
+import { PodcastCardProps } from "@/types";
 
 const PodcastCard = ({
   imgUrl,

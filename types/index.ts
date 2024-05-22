@@ -4,14 +4,14 @@ import { Dispatch, SetStateAction } from "react";
 
 import { Id } from "@/convex/_generated/dataModel";
 
-declare interface EmptyStateProps {
+export interface EmptyStateProps {
   title: string;
   search?: boolean;
   buttonText?: string;
   buttonLink?: string;
 }
 
-declare interface TopPodcastersProps {
+export interface TopPodcastersProps {
   _id: Id<"users">;
   _creationTime: number;
   email: string;
@@ -25,7 +25,7 @@ declare interface TopPodcastersProps {
   totalPodcasts: number;
 }
 
-declare interface PodcastProps {
+export interface PodcastProps {
   _id: Id<"podcasts">;
   _creationTime: number;
   audioStorageId: Id<"_storage"> | null;
@@ -45,14 +45,20 @@ declare interface PodcastProps {
   views: number;
 }
 
-declare interface ProfilePodcastProps {
+export interface ProfilePodcastProps {
   podcasts: PodcastProps[];
   listeners: number;
 }
 
-type VoiceType = "alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer";
+export type VoiceType =
+  | "alloy"
+  | "echo"
+  | "fable"
+  | "onyx"
+  | "nova"
+  | "shimmer";
 
-declare interface GeneratePodcastProps {
+export interface GeneratePodcastProps {
   voiceType: VoiceType;
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;
@@ -62,7 +68,7 @@ declare interface GeneratePodcastProps {
   setAudioDuration: Dispatch<SetStateAction<number>>;
 }
 
-declare interface GenerateThumbnailProps {
+export interface GenerateThumbnailProps {
   setImage: Dispatch<SetStateAction<string>>;
   setImageStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
   image: string;
@@ -70,7 +76,7 @@ declare interface GenerateThumbnailProps {
   setImagePrompt: Dispatch<SetStateAction<string>>;
 }
 
-declare interface LatestPodcastCardProps {
+export interface LatestPodcastCardProps {
   imgUrl: string;
   title: string;
   duration: string;
@@ -81,7 +87,7 @@ declare interface LatestPodcastCardProps {
   podcastId: Id<"podcasts">;
 }
 
-declare interface PodcastDetailPlayerProps {
+export interface PodcastDetailPlayerProps {
   audioUrl: string;
   podcastTitle: string;
   author: string;
@@ -94,7 +100,7 @@ declare interface PodcastDetailPlayerProps {
   authorId: string;
 }
 
-declare interface AudioProps {
+export interface AudioProps {
   title: string;
   audioUrl: string;
   author: string;
@@ -102,7 +108,30 @@ declare interface AudioProps {
   podcastId: string;
 }
 
-declare interface AudioContextType {
+export interface AudioContextType {
   audio: AudioProps | undefined;
   setAudio: React.Dispatch<React.SetStateAction<AudioProps | undefined>>;
 }
+
+export interface PodcastCardProps {
+  imgUrl: string;
+  title: string;
+  description: string;
+  podcastId: Id<"podcasts">;
+}
+
+export interface CarouselProps {
+  fansLikeDetail: TopPodcastersProps[];
+}
+
+export interface ProfileCardProps {
+  podcastData: ProfilePodcastProps;
+  imageUrl: string;
+  userFirstName: string;
+}
+
+export type UseDotButtonType = {
+  selectedIndex: number;
+  scrollSnaps: number[];
+  onDotButtonClick: (index: number) => void;
+};

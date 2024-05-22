@@ -3,12 +3,9 @@
 import { useQuery } from "convex/react";
 
 import Header from "@/components/Header";
-import LatestPodcastCard from "@/components/LatestPodcastCard";
 import LoaderSpinner from "@/components/Loader";
 import PodcastCard from "@/components/PodcastCard";
 import { api } from "@/convex/_generated/api";
-import { formatTime } from "@/lib/formatTime";
-import { cn } from "@/lib/utils";
 
 const Home = () => {
   const trendingPodcasts = useQuery(api.podcasts.getTrendingPodcasts);

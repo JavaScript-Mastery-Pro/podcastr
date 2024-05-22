@@ -1,9 +1,10 @@
 "use client";
 
-import { SignedIn, useUser } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { api } from "@/convex/_generated/api";
@@ -16,6 +17,7 @@ import Header from "./Header";
 const RightSidebar = () => {
   const { user } = useUser();
   const { audio } = useAudio();
+  const router = useRouter();
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   return (
     <section
@@ -25,13 +27,7 @@ const RightSidebar = () => {
     >
       <SignedIn>
         <Link href={`/profile/${user?.id}`} className="flex gap-3 pb-12">
-          <Image
-            src={user?.imageUrl!}
-            alt="profile"
-            width={50}
-            height={50}
-            className="rounded-full"
-          />
+          <UserButton afterSignOutUrl="/" />
           <div className="flex w-full items-center justify-between">
             <h1 className="text-16 truncate font-semibold text-white-1">
               {`${user?.firstName}`} {user?.lastName && `${user?.lastName}`}
@@ -53,17 +49,19 @@ const RightSidebar = () => {
         <Header headerTitle="Top Podcasters" />
         <div className="flex flex-col gap-6">
           {topPodcasters?.slice(0, 4).map((podcaster) => (
-            <div key={podcaster._id} className="flex justify-between">
+            <div
+              key={podcaster._id}
+              className="flex cursor-pointer justify-between"
+              onClick={() => router.push(`/profile/${podcaster.clerkId}`)}
+            >
               <figure className="flex items-center gap-2">
-                <Link href={`/profile/${podcaster.clerkId}`}>
-                  <Image
-                    src={podcaster.imageUrl}
-                    alt="casters"
-                    width={44}
-                    height={44}
-                    className="rounded-lg"
-                  />
-                </Link>
+                <Image
+                  src={podcaster.imageUrl}
+                  alt="casters"
+                  width={44}
+                  height={44}
+                  className="aspect-square rounded-lg"
+                />
                 <h2 className="text-14 font-semibold text-white-1">
                   {podcaster.name}
                 </h2>

@@ -3,16 +3,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { useAudio } from "@/providers/AudioProvider";
-import { PodcastProps, ProfilePodcastProps } from "@/types";
+import { PodcastProps, ProfileCardProps } from "@/types";
 
 import LoaderSpinner from "./Loader";
 import { Button } from "./ui/button";
-
-interface ProfileCardProps {
-  podcastData: ProfilePodcastProps;
-  imageUrl: string;
-  userFirstName: string;
-}
 
 const ProfileCard = ({
   podcastData,
