@@ -119,11 +119,11 @@ const PodcastPlayer = () => {
               width={64}
               height={64}
               alt="player1"
-              className="rounded-xl"
+              className="aspect-square rounded-xl"
             />
           </Link>
-          <div className="flex flex-col">
-            <h2 className="text-14 font-semibold text-white-1">
+          <div className="flex w-[160px] flex-col">
+            <h2 className="text-14 truncate font-semibold text-white-1">
               {audio?.title}
             </h2>
             <p className="text-12 font-normal text-white-2">{audio?.author}</p>

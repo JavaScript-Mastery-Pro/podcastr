@@ -95,4 +95,5 @@ export interface PodcastDetailPlayerProps {
   imageStorageId: Id<"_storage">;
   audioStorageId: Id<"_storage">;
   authorImageUrl: string;
+  authorId: string;
 }

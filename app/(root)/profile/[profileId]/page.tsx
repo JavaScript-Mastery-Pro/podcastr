@@ -3,6 +3,7 @@
 import { useQuery } from "convex/react";
 
 import EmptyState from "@/components/EmptyState";
+import LoaderSpinner from "@/components/Loader";
 import ProfileCard from "@/components/ProfileCard";
 import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
@@ -20,6 +21,8 @@ const ProfilePage = ({
   const podcastsData = useQuery(api.podcasts.getPodcastByAuthorId, {
     authorId: params.profileId,
   });
+
+  if (!user || !podcastsData) return <LoaderSpinner />;
 
   return (
     <section className="mt-9 flex flex-col">

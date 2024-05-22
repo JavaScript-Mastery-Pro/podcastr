@@ -32,6 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { cn } from "@/lib/utils";
 const formSchema = z.object({
   podcastTitle: z.string().min(1, "Podcast Title is required"),
   podcastDescription: z.string().min(1, "Podcast Description is required"),
@@ -128,7 +129,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="input-class font-bold focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-orange-1"
                       placeholder="JSM masterclass"
                       {...field}
                     />
@@ -145,8 +146,16 @@ const CreatePodcast = () => {
               <Select
                 onValueChange={(value) => setVoiceType(value as VoiceType)}
               >
-                <SelectTrigger className="text-16 w-full border-none bg-black-1 font-light text-gray-1 focus:ring-orange-1">
-                  <SelectValue placeholder="Select AI Voice" />
+                <SelectTrigger
+                  className={cn(
+                    "text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-orange-1",
+                    { "text-white-1": voiceType }
+                  )}
+                >
+                  <SelectValue
+                    placeholder="Select AI Voice"
+                    className="placeholder:text-gray-1"
+                  />
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
                   {voiceDetails?.map((category) => (
@@ -174,12 +183,12 @@ const CreatePodcast = () => {
               name="podcastDescription"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
-                  <FormLabel className="text-16 font-light text-white-1">
+                  <FormLabel className="text-16 font-bold text-white-1">
                     Description
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      className="input-class font-light focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-orange-1"
                       placeholder="Write a short description about the podcast"
                       {...field}
                     />

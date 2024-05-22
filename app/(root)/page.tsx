@@ -3,6 +3,7 @@
 import { useQuery } from "convex/react";
 
 import LatestPodcastCard from "@/components/LatestPodcastCard";
+import LoaderSpinner from "@/components/Loader";
 import Header from "@/components/shared/Header";
 import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
@@ -12,6 +13,9 @@ import { cn } from "@/lib/utils";
 const Home = () => {
   const trendingPodcasts = useQuery(api.podcasts.getTrendingPodcasts);
   const latestPodcasts = useQuery(api.podcasts.getAllPodcasts);
+
+  if (!trendingPodcasts || !latestPodcasts) return <LoaderSpinner />;
+
   return (
     <div className="mt-9 flex flex-col gap-9">
       <section className="flex flex-col gap-5">

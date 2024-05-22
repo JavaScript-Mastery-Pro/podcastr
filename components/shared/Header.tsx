@@ -2,8 +2,6 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
-
 const Header = ({
   headerTitle,
   titleClassName,
@@ -16,13 +14,12 @@ const Header = ({
       <h1 className={cn("text-18 font-bold text-white-1", titleClassName)}>
         {headerTitle}
       </h1>
-      <Button
-        asChild
-        variant="ghost"
+      <Link
+        href="/discover"
         className="text-16 font-semibold text-orange-1 hover:bg-transparent hover:text-orange-1"
       >
-        <Link href="/discover">See all</Link>
-      </Button>
+        See all
+      </Link>
     </header>
   );
 };
