@@ -61,7 +61,9 @@ const ProfileCard = ({
               height={15}
               alt="verified"
             />
-            <h2 className="text-14 font-medium text-white-2">Podcaster Name</h2>
+            <h2 className="text-14 font-medium text-white-2">
+              Verified Creator
+            </h2>
           </figure>
           <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1">
             {userFirstName}
@@ -85,7 +87,7 @@ const ProfileCard = ({
             className="text-16 bg-orange-1 font-extrabold text-white-1"
           >
             <Image
-              src="/icons/randomPlay.svg"
+              src="/icons/Play.svg"
               width={20}
               height={20}
               alt="random play"

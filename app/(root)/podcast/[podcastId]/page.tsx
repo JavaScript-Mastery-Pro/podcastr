@@ -4,6 +4,7 @@ import { useQuery } from "convex/react";
 import Image from "next/image";
 
 import EmptyState from "@/components/EmptyState";
+import LoaderSpinner from "@/components/Loader";
 import PodcastDetailPlayer from "@/components/PodcastDetailPlayer";
 import PodcastCard from "@/components/shared/PodcastCard";
 import { api } from "@/convex/_generated/api";
@@ -43,6 +44,8 @@ const PodcastDetailPage = ({
 
   const isOwner = user?.id === podcast?.authorId;
 
+  if (!similarPodcast || !podcast) return <LoaderSpinner />;
+
   return (
     <section className="flex w-full flex-col">
       <header className="mt-9 flex items-center justify-between">
@@ -67,6 +70,7 @@ const PodcastDetailPage = ({
         audioStorageId={podcast?.audioStorageId!}
         isOwner={isOwner}
         authorImageUrl={podcast?.authorImageUrl!}
+        authorId={podcast?.authorId!}
       />
       <p className="text-16 pb-8 pt-[45px] font-medium text-white-2 max-md:text-center">
         {podcast?.podcastDescription}

@@ -2,6 +2,7 @@
 import { useMutation } from "convex/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { api } from "@/convex/_generated/api";
 import { useAudio } from "@/providers/AudioProvider";
@@ -9,12 +10,6 @@ import { PodcastDetailPlayerProps } from "@/types";
 
 import LoaderSpinner from "./Loader";
 import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { useToast } from "./ui/use-toast";
 
 const PodcastDetailPlayer = ({
@@ -27,10 +22,12 @@ const PodcastDetailPlayer = ({
   audioStorageId,
   isOwner,
   authorImageUrl,
+  authorId,
 }: PodcastDetailPlayerProps) => {
   const router = useRouter();
   const { setAudio } = useAudio();
   const { toast } = useToast();
+  const [isDeleting, setIsDeleting] = useState(false);
   const deletePodcast = useMutation(api.podcasts.deletePodcast);
 
   const handleDelete = async () => {
@@ -76,7 +73,12 @@ const PodcastDetailPlayer = ({
             <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1">
               {podcastTitle}
             </h1>
-            <figure className="flex items-center gap-2">
+            <figure
+              className="flex cursor-pointer items-center gap-2"
+              onClick={() => {
+                router.push(`/profile/${authorId}`);
+              }}
+            >
               <Image
                 src={authorImageUrl}
                 width={30}
@@ -98,35 +100,34 @@ const PodcastDetailPlayer = ({
               height={20}
               alt="random play"
             />{" "}
-            &nbsp; Play a podcast
+            &nbsp; Play podcast
           </Button>
         </div>
       </div>
       {isOwner && (
-        <div className="mt-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
+        <div className="relative mt-2">
+          <Image
+            src="/icons/three-dots.svg"
+            width={20}
+            height={30}
+            alt="Three dots icon"
+            className="cursor-pointer"
+            onClick={() => setIsDeleting((prev) => !prev)}
+          />
+          {isDeleting && (
+            <div
+              className="absolute -left-32 -top-2 z-10 flex w-32 cursor-pointer justify-center gap-2 rounded-md bg-black-6 py-1.5 hover:bg-black-2"
+              onClick={handleDelete}
+            >
               <Image
-                src="/icons/three-dots.svg"
-                width={20}
-                height={30}
-                alt="Three dots icon"
+                src="/icons/delete.svg"
+                width={16}
+                height={16}
+                alt="Delete icon"
               />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="border-none bg-black-1 hover:bg-black-6">
-              <DropdownMenuItem className="hover:bg-black-6">
-                <div className="flex gap-2" onClick={handleDelete}>
-                  <Image
-                    src="/icons/delete.svg"
-                    width={16}
-                    height={16}
-                    alt="Delete icon"
-                  />
-                  <h2 className="text-16 font-normal text-white-1">Delete</h2>
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <h2 className="text-16 font-normal text-white-1">Delete</h2>
+            </div>
+          )}
         </div>
       )}
     </div>
