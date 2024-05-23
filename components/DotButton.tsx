@@ -53,6 +53,7 @@ type DotButtonProps = {
 
 export const DotButton: React.FC<DotButtonProps> = ({ selected, onClick }) => {
   return (
+    // eveything is similar to EmblaCarouselDotButton.tsx just modify the button as per your design.
     <button
       type="button"
       onClick={onClick}

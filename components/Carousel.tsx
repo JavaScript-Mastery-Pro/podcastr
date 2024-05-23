@@ -17,6 +17,8 @@ const Carousel = ({ fansLikeDetail }: CarouselProps) => {
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
     const autoplay = emblaApi?.plugins()?.autoplay;
+
+    // everything is similar to code from EmblaCarousel.tsx . except we have satisfy the typescript error by adding the some additional types.
     if (!autoplay || !("stopOnInteraction" in autoplay.options)) return;
     const resetOrStop =
       autoplay.options.stopOnInteraction === false
@@ -35,6 +37,8 @@ const Carousel = ({ fansLikeDetail }: CarouselProps) => {
     fansLikeDetail && fansLikeDetail?.filter((item) => item.totalPodcasts > 0);
 
   return (
+    // modify the code as per your design
+    // provide emblaref to the parent container
     <section
       className="flex w-full flex-col gap-4 overflow-hidden"
       ref={emblaRef}
