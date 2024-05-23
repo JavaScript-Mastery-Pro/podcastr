@@ -58,6 +58,7 @@ export const generateAudioAction = action({
   },
 });
 
+// use this action only for generating voicetype audio and store it in the database. so that we can fetch it later and use for playing voiceType audio in the create-podcast page
 export const generateRealTimeAudioAction = action({
   args: {
     voiceType: v.union(
