@@ -1,3 +1,5 @@
+import { channel } from "diagnostics_channel";
+
 import { ConvexError, v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
@@ -5,12 +7,12 @@ import { mutation, query } from "./_generated/server";
 // create podcast mutation
 export const createPodcast = mutation({
   args: {
-    audioStorageId: v.union(v.id("_storage"), v.null()),
-    podcastTitle: v.string(),
-    podcastDescription: v.string(),
+    audioStorageId: v.id("_storage"),
+    title: v.string(),
+    description: v.string(),
     audioUrl: v.string(),
     imageUrl: v.string(),
-    imageStorageId: v.union(v.id("_storage"), v.null()),
+    imageStorageId: v.id("_storage"),
     voicePrompt: v.string(),
     imagePrompt: v.string(),
     voiceType: v.string(),
@@ -35,19 +37,19 @@ export const createPodcast = mutation({
 
     return await ctx.db.insert("podcasts", {
       audioStorageId: args.audioStorageId,
-      user: user[0]._id,
-      podcastTitle: args.podcastTitle,
-      podcastDescription: args.podcastDescription,
+      userId: user[0]._id,
+      title: args.title,
+      description: args.description,
       audioUrl: args.audioUrl,
       imageUrl: args.imageUrl,
       imageStorageId: args.imageStorageId,
-      author: user[0].name,
-      authorId: user[0].clerkId,
+      // author: user[0].name,
+      // authorId: user[0].clerkId,
+      // authorImageUrl: user[0].imageUrl,
       voicePrompt: args.voicePrompt,
       imagePrompt: args.imagePrompt,
       voiceType: args.voiceType,
       views: args.views,
-      authorImageUrl: user[0].imageUrl,
       audioDuration: args.audioDuration,
     });
   },
@@ -96,7 +98,11 @@ export const getPodcastById = query({
     podcastId: v.id("podcasts"),
   },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.podcastId);
+    const podcast = await ctx.db.get(args.podcastId);
+
+    return podcast
+      ?.withIndex("userId", (q) => q.eq("userId", podcast.userId))
+      ?.collect();
   },
 });
 
@@ -109,19 +115,21 @@ export const getTrendingPodcasts = query({
   },
 });
 
-// this query will get the podcast by the authorId.
+// TODO
 export const getPodcastByAuthorId = query({
   args: {
-    authorId: v.string(),
+    authorId: v.id("users"),
   },
   handler: async (ctx, args) => {
-    const podcasts = await ctx.db
-      .query("podcasts")
-      .filter((q) => q.eq(q.field("authorId"), args.authorId))
-      .collect();
+    const user = await ctx.db.get(args.authorId);
+    // const podcasts = await ctx.db
+    //   .query("podcasts")
+    //   .filter((q) => q.eq(q.field("userId"), args.authorId))
+    //   .collect();
+    const podcasts = user?.podcastIds.map(ctx.db.get);
 
-    const totalListeners = podcasts.reduce(
-      (sum, podcast) => sum + podcast.views,
+    const totalListeners = podcasts?.reduce(
+      (sum, podcast) => sum + podcast?.views,
       0
     );
 
@@ -139,20 +147,9 @@ export const getPodcastBySearch = query({
       return await ctx.db.query("podcasts").order("desc").collect();
     }
 
-    const authorSearch = await ctx.db
-      .query("podcasts")
-      .withSearchIndex("search_author", (q) => q.search("author", args.search))
-      .take(10);
-
-    if (authorSearch.length > 0) {
-      return authorSearch;
-    }
-
     const titleSearch = await ctx.db
       .query("podcasts")
-      .withSearchIndex("search_title", (q) =>
-        q.search("podcastTitle", args.search)
-      )
+      .withSearchIndex("search_title", (q) => q.search("title", args.search))
       .take(10);
 
     if (titleSearch.length > 0) {
@@ -162,7 +159,7 @@ export const getPodcastBySearch = query({
     return await ctx.db
       .query("podcasts")
       .withSearchIndex("search_body", (q) =>
-        q.search("podcastDescription" || "podcastTitle", args.search)
+        q.search("description" || "title", args.search)
       )
       .take(10);
   },

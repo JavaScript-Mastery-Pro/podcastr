@@ -26,7 +26,7 @@ const ProfileCard = ({
   useEffect(() => {
     if (randomPodcast) {
       setAudio({
-        title: randomPodcast.podcastTitle,
+        title: randomPodcast.title,
         audioUrl: randomPodcast.audioUrl || "",
         imageUrl: randomPodcast.imageUrl || "",
         author: randomPodcast.author,

@@ -3,36 +3,39 @@ import { v } from "convex/values";
 
 export default defineSchema({
   users: defineTable({
+    name: v.string(),
     email: v.string(),
     imageUrl: v.string(),
     clerkId: v.string(),
-    name: v.string(),
+    podcastIds: v.array(v.id("podcasts")),
   }),
   podcasts: defineTable({
-    audioStorageId: v.union(v.id("_storage"), v.null()),
-    user: v.id("users"),
-    podcastTitle: v.string(),
-    podcastDescription: v.string(),
-    audioUrl: v.union(v.string(), v.null()),
-    imageUrl: v.union(v.string(), v.null()),
-    imageStorageId: v.union(v.id("_storage"), v.null()),
-    author: v.string(),
-    authorId: v.string(),
-    authorImageUrl: v.string(),
+    userId: v.id("users"),
+    title: v.string(),
+    description: v.string(),
+    audioUrl: v.string(),
+    imageStorageId: v.id("_storage"),
+    imageUrl: v.string(),
+    audioStorageId: v.id("_storage"),
+    // author: v.string(),
+    // authorId: v.string(),
+    // authorImageUrl: v.string(),
     voicePrompt: v.string(),
-    imagePrompt: v.union(v.string(), v.null()),
+    imagePrompt: v.string(),
     voiceType: v.string(),
     audioDuration: v.number(),
     views: v.number(),
   })
-    .searchIndex("search_author", {
-      searchField: "author",
-    })
+    .index("podcastId", ["podcastId"])
+    .index("userId", ["userId"])
+    // .searchIndex("search_author", {
+    //   searchField: "author",
+    // })
     .searchIndex("search_title", {
-      searchField: "podcastTitle",
+      searchField: "title",
     })
     .searchIndex("search_body", {
-      searchField: "podcastDescription",
+      searchField: "description",
     }),
   voice: defineTable({
     voiceType: v.string(),

@@ -64,7 +64,7 @@ const PodcastDetailPage = ({
         audioUrl={podcast?.audioUrl!}
         imageUrl={podcast?.imageUrl!}
         author={podcast?.author!}
-        podcastTitle={podcast?.podcastTitle!}
+        title={podcast?.title!}
         imageStorageId={podcast?.imageStorageId!}
         podcastId={podcast?._id!}
         audioStorageId={podcast?.audioStorageId!}
@@ -73,7 +73,7 @@ const PodcastDetailPage = ({
         authorId={podcast?.authorId!}
       />
       <p className="text-16 pb-8 pt-[45px] font-medium text-white-2 max-md:text-center">
-        {podcast?.podcastDescription}
+        {podcast?.description}
       </p>
 
       <div className="flex flex-col gap-8">
@@ -93,8 +93,8 @@ const PodcastDetailPage = ({
               <PodcastCard
                 key={podcast._id}
                 imgUrl={podcast.imageUrl!}
-                title={podcast.podcastTitle}
-                description={podcast.podcastDescription}
+                title={podcast.title}
+                description={podcast.description}
                 podcastId={podcast._id}
               />
             ))}

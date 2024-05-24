@@ -19,6 +19,8 @@ const RightSidebar = () => {
   const { audio } = useAudio();
   const router = useRouter();
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
+  const convexUser = useQuery(api.users.getUserById, { clerkId: user?.id! });
+
   return (
     <section
       className={cn("right_sidebar h-[calc(100vh-5px)]", {
@@ -26,7 +28,7 @@ const RightSidebar = () => {
       })}
     >
       <SignedIn>
-        <Link href={`/profile/${user?.id}`} className="flex gap-3 pb-12">
+        <Link href={`/profile/${convexUser?._id}`} className="flex gap-3 pb-12">
           <UserButton afterSignOutUrl="/" />
           <div className="flex w-full items-center justify-between">
             <h1 className="text-16 truncate font-semibold text-white-1">

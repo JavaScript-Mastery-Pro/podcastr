@@ -7,6 +7,7 @@ import LoaderSpinner from "@/components/Loader";
 import PodcastCard from "@/components/PodcastCard";
 import ProfileCard from "@/components/ProfileCard";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 const ProfilePage = ({
   params,
@@ -19,7 +20,7 @@ const ProfilePage = ({
     clerkId: params.profileId,
   });
   const podcastsData = useQuery(api.podcasts.getPodcastByAuthorId, {
-    authorId: params.profileId,
+    authorId: params.profileId as Id<"users">,
   });
 
   if (!user || !podcastsData) return <LoaderSpinner />;
@@ -46,8 +47,8 @@ const ProfilePage = ({
                 <PodcastCard
                   key={podcast._id}
                   imgUrl={podcast.imageUrl!}
-                  title={podcast.podcastTitle!}
-                  description={podcast.podcastDescription}
+                  title={podcast.title!}
+                  description={podcast.description}
                   podcastId={podcast._id}
                 />
               ))}

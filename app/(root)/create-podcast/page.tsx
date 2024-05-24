@@ -35,8 +35,8 @@ import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { VoiceType } from "@/types";
 const formSchema = z.object({
-  podcastTitle: z.string().min(1, "Podcast Title is required"),
-  podcastDescription: z.string().min(1, "Podcast Description is required"),
+  title: z.string().min(1, "Podcast Title is required"),
+  description: z.string().min(1, "Podcast Description is required"),
 });
 
 const CreatePodcast = () => {
@@ -66,8 +66,8 @@ const CreatePodcast = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      podcastTitle: "",
-      podcastDescription: "",
+      title: "",
+      description: "",
     },
   });
 
@@ -83,8 +83,8 @@ const CreatePodcast = () => {
       }
       const podcast = await createPodcast({
         audioStorageId: audioStorageId as Id<"_storage">,
-        podcastTitle: data.podcastTitle,
-        podcastDescription: data.podcastDescription,
+        title: data.title,
+        description: data.description,
         audioUrl,
         imageUrl,
         imageStorageId: imageStorageId as Id<"_storage">,
@@ -120,7 +120,7 @@ const CreatePodcast = () => {
           <div className="flex flex-col gap-[30px] border-b border-black-5 pb-10">
             <FormField
               control={form.control}
-              name="podcastTitle"
+              name="title"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">
@@ -179,7 +179,7 @@ const CreatePodcast = () => {
             </div>
             <FormField
               control={form.control}
-              name="podcastDescription"
+              name="description"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">

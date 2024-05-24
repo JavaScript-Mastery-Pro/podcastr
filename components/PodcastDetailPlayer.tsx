@@ -14,7 +14,7 @@ import { useToast } from "./ui/use-toast";
 
 const PodcastDetailPlayer = ({
   audioUrl,
-  podcastTitle,
+  title,
   author,
   imageUrl,
   podcastId,
@@ -48,7 +48,7 @@ const PodcastDetailPlayer = ({
 
   const handlePlay = () => {
     setAudio({
-      title: podcastTitle,
+      title,
       audioUrl,
       imageUrl,
       author,
@@ -71,7 +71,7 @@ const PodcastDetailPlayer = ({
         <div className="flex w-full flex-col gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">
             <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1">
-              {podcastTitle}
+              {title}
             </h1>
             <figure
               className="flex cursor-pointer items-center gap-2"

@@ -43,8 +43,8 @@ const DiscoverPage = ({
                   <PodcastCard
                     key={podcast._id}
                     imgUrl={podcast.imageUrl!}
-                    title={podcast.podcastTitle!}
-                    description={podcast.podcastDescription}
+                    title={podcast.title!}
+                    description={podcast.description}
                     podcastId={podcast._id}
                   />
                 ))}
