@@ -57,27 +57,3 @@ export const generateAudioAction = action({
     return buffer;
   },
 });
-
-// use this action only for generating voicetype audio and store it in the database. so that we can fetch it later and use for playing voiceType audio in the create-podcast page
-export const generateRealTimeAudioAction = action({
-  args: {
-    voiceType: v.union(
-      v.literal("alloy"),
-      v.literal("echo"),
-      v.literal("fable"),
-      v.literal("onyx"),
-      v.literal("nova"),
-      v.literal("shimmer")
-    ),
-  },
-  handler: async (ctx, args) => {
-    const response = await openai.audio.speech.create({
-      model: "tts-1",
-      voice: args.voiceType,
-      input: `Hello, I am ${args.voiceType}.`,
-    });
-
-    const buffer = await response.arrayBuffer();
-    return buffer;
-  },
-});

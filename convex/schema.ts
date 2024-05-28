@@ -34,8 +34,4 @@ export default defineSchema({
     .searchIndex("search_body", {
       searchField: "podcastDescription",
     }),
-  voice: defineTable({
-    voiceType: v.string(),
-    voiceUrl: v.string(),
-  }),
 });

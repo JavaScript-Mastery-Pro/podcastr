@@ -1,10 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,10 +34,13 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { VoiceType } from "@/types";
+
 const formSchema = z.object({
   podcastTitle: z.string().min(1, "Podcast Title is required"),
   podcastDescription: z.string().min(1, "Podcast Description is required"),
 });
+
+const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 
 const CreatePodcast = () => {
   const router = useRouter();
@@ -56,12 +59,7 @@ const CreatePodcast = () => {
   const [imageUrl, setImageUrl] = useState("");
   const createPodcast = useMutation(api.podcasts.createPodcast);
   const [voiceType, setVoiceType] = useState<VoiceType | null>();
-  const voiceDetails = useQuery(api.voice.getAllVoices);
-
-  const voice = useMemo(
-    () => voiceDetails?.find((voice) => voice.voiceType === voiceType),
-    [voiceDetails, voiceType]
-  );
+  console.log("voiceType", voiceType);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -157,19 +155,19 @@ const CreatePodcast = () => {
                   />
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
-                  {voiceDetails?.map((category) => (
+                  {voiceCategories.map((category, index) => (
                     <SelectItem
-                      key={category._id}
-                      value={category.voiceType as VoiceType}
+                      key={index}
+                      value={category as VoiceType}
                       className="capitalize focus:bg-orange-1"
                     >
-                      {category.voiceType}
+                      {category}
                     </SelectItem>
                   ))}
                 </SelectContent>
-                {voice?.voiceUrl && (
+                {voiceType && (
                   <audio
-                    src={voice.voiceUrl}
+                    src={`/${voiceType}.mp3`}
                     autoPlay
                     controls
                     className="hidden"
