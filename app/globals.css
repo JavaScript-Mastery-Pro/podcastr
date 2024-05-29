@@ -14,7 +14,7 @@ html {
 
 @layer utilities {
   .input-class {
-    @apply text-16 placeholder:text-16 bg-black-1 rounded-[6px] placeholder:text-gray-1 text-white-1 border-none;
+    @apply text-16 placeholder:text-16 bg-black-1 rounded-[6px] placeholder:text-gray-1 focus-visible:border-0 border-none focus-visible:ring-offset-0 focus-visible:ring-0 focus-visible:outline-0;
   }
   .podcast_grid {
     @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4;
