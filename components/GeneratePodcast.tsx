@@ -92,7 +92,7 @@ const GeneratePodcast = ({
           AI prompt to generate podcast
         </Label>
         <Textarea
-          className="input-class font-light focus-visible:ring-orange-1"
+          className="input-class font-light focus-visible:ring-offset-orange-1"
           placeholder="Provide text to AI to generate audio"
           rows={5}
           value={voicePrompt}
