@@ -113,6 +113,9 @@ html {
 .cl-socialButtonsIconButton {
   border: 2px solid #222429;
 }
+.cl-button {
+  color: white;
+}
 .cl-socialButtonsProviderIcon__github {
   filter: invert(1);
 }
