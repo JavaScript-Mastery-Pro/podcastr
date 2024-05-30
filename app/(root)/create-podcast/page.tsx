@@ -126,7 +126,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="input-class text-gray-1 focus-visible:ring-offset-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="JSM masterclass"
                       {...field}
                     />
