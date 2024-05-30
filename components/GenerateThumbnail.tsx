@@ -34,7 +34,6 @@ const GenerateThumbnail = ({
   const { toast } = useToast();
 
   const handleImage = async (blob: Blob, fileName: string) => {
-    setIsImageLoading(true);
     setImage("");
     try {
       const file = new File([blob], fileName, {
@@ -45,7 +44,6 @@ const GenerateThumbnail = ({
       setImageStorageId(storageId);
       const imageUrl = await getImageUrl({ storageId });
       setImage(imageUrl!);
-      setIsImageLoading(false);
       toast({
         title: "Thumbnail generated successfully",
       });
@@ -60,32 +58,38 @@ const GenerateThumbnail = ({
 
   const generateImage = async () => {
     try {
+      setIsImageLoading(true);
       const response = await handleGenerateThumbnail({ prompt: imagePrompt });
       const blob = new Blob([response], { type: "image/png" });
-      handleImage(blob, `thumbnail-${uuidv4()}`);
+      await handleImage(blob, `thumbnail-${uuidv4()}`);
+      setIsImageLoading(false);
     } catch (error) {
       console.error("Error generating thumbnail", error);
       toast({
         title: "Error generating thumbnail",
         variant: "destructive",
       });
+      setIsImageLoading(false);
     }
   };
 
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     try {
+      setIsImageLoading(true);
       const files = e.target.files;
       if (!files) return;
       const file = files[0];
       const blob = await file.arrayBuffer().then((ab) => new Blob([ab]));
-      handleImage(blob, file.name);
+      await handleImage(blob, file.name);
+      setIsImageLoading(false);
     } catch (error) {
       console.error("Error uploading image", error);
       toast({
         title: "Error generating thumbnail",
         variant: "destructive",
       });
+      setIsImageLoading(false);
     }
   };
 
