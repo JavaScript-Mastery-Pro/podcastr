@@ -126,7 +126,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="JSM masterclass"
                       {...field}
                     />
@@ -145,7 +145,7 @@ const CreatePodcast = () => {
               >
                 <SelectTrigger
                   className={cn(
-                    "text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-orange-1",
+                    "text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-offset-orange-1",
                     { "text-white-1": voiceType }
                   )}
                 >
@@ -154,7 +154,7 @@ const CreatePodcast = () => {
                     className="placeholder:text-gray-1"
                   />
                 </SelectTrigger>
-                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
+                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-offset-orange-1">
                   {voiceCategories.map((category, index) => (
                     <SelectItem
                       key={index}
@@ -185,7 +185,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="Write a short description about the podcast"
                       {...field}
                     />
