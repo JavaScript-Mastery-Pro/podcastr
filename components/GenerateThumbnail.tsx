@@ -120,7 +120,7 @@ const GenerateThumbnail = ({
               AI prompt to generate thumbnail
             </Label>
             <Textarea
-              className="input-class font-light focus-visible:ring-orange-1"
+              className="input-class font-light focus-visible:ring-offset-orange-1"
               placeholder="Write a prompt to generate custom thumbnail"
               value={imagePrompt}
               onChange={(e) => setImagePrompt(e.target.value)}
